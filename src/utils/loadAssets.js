@@ -1,0 +1,73 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import Constants from 'expo-constants';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// import { StatusBar } from 'expo-status-bar';
+
+const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY-${Constants.manifest.sdkVersion}`;
+
+const usePromiseAll = (promises, cb) =>
+  useEffect(() => {
+    (async () => {
+      await Promise.all(promises);
+      cb();
+    })();
+  });
+
+const useLoadAssets = (assets, fonts) => {
+  const [ready, setReady] = useState(false);
+  usePromiseAll(
+    [Font.loadAsync(fonts), ...assets.map((asset) => Asset.loadAsync(asset))],
+    () => setReady(true)
+  );
+  return ready;
+};
+const LoadAssets = ({ assets, fonts, children }) => {
+  const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
+  const [initialState, setInitialState] = useState();
+  const ready = useLoadAssets(assets || [], fonts || {});
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await AsyncStorage.getItem(
+          NAVIGATION_STATE_KEY
+        );
+        const state = savedStateString
+          ? JSON.parse(savedStateString)
+          : undefined;
+        setInitialState(state);
+      } finally {
+        setIsNavigationReady(true);
+      }
+    };
+
+    if (!isNavigationReady) {
+      restoreState();
+    }
+  }, [isNavigationReady]);
+  const onStateChange = useCallback(
+    (state) =>
+      AsyncStorage.setItem(NAVIGATION_STATE_KEY, JSON.stringify(state)),
+    []
+  );
+  if (!ready || !isNavigationReady) {
+    console.log('not ready');
+    return <AppLoading />;
+  }
+  console.log('app ready');
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer {...{ onStateChange, initialState }}>
+        {/* <StatusBar style="dark" /> */}
+        {children}
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export default LoadAssets;
