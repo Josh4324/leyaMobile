@@ -5,3 +5,5 @@ export const Onboarding1 = require('./onboarding1.png');
 export const Onboarding2 = require('./onboarding2.png');
 export const Onboarding3 = require('./onboarding3.png');
 export const Knot = require('./knot.png');
+export const Ripple = require('./ripple.png');
+export const Success = require('./success.png');

@@ -14,6 +14,7 @@ const Theme = {
     secondaryText: '#666666',
     red: '#F85857',
     white: '#ffffff',
+    inputBG: '#F9F9F9',
   },
   spacing: {
     s: 8,

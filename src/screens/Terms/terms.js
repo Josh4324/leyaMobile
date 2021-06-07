@@ -9,36 +9,22 @@ import {
   View,
 } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { moderateScale } from 'react-native-size-matters';
 import SafeWrapper from '../../components/safe-wrapper';
 import Theme, { Box, Text } from '../../utils/theme';
 import Logo from '../../../assets/images/logo.png';
+import SwipeButton from '../../components/swipe-button';
+import ModalWrapper from '../../components/modal-wrapper';
+import TermsArticle from './terms-article';
+import { backgroundColor } from '@shopify/restyle';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-export default function Terms() {
+export default function Terms({ navigation }) {
   const { width, height } = useWindowDimensions();
   const [agree, setAgree] = useState(false);
-
-  const renderLeftActions = (progress, dragX) => {
-    console.log(progress);
-    const scale = dragX.interpolate({
-      inputRange: [0.5, 50],
-      outputRange: [-1, -0.1],
-    });
-
-    return (
-      <Animated.View
-        backgroundColor="red"
-        style={{
-          borderRadius: 100,
-        }}
-      >
-        <Text>Swiped</Text>
-      </Animated.View>
-    );
-  };
+  const [modalVisible, setModalVisible] = useState(false);
+  const { navigate } = navigation;
 
   return (
     <Box flex={1} backgroundColor="white">
@@ -92,9 +78,19 @@ export default function Terms() {
                   color="greenPrimary"
                 >
                   I want to apply & agree to the{' '}
-                  <Text variant="medium" textDecorationLine="underline">
-                    Terms and Conditions
-                  </Text>
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text
+                      fontSize={14}
+                      lineHeight={22}
+                      color="greenPrimary"
+                      variant="medium"
+                      textDecorationLine="underline"
+                    >
+                      Terms and Conditions
+                    </Text>
+                  </TouchableOpacity>
                 </Text>
               </Box>
 
@@ -156,31 +152,23 @@ export default function Terms() {
                 </Text>
               </Box>
             ) : (
-              <Swipeable renderLeftActions={renderLeftActions}>
-                <Box style={styles.swipeButton}>
-                  <TouchableOpacity>
-                    <Box style={styles.swipeCircle}>
-                      <AntDesign
-                        name="doubleright"
-                        size={22}
-                        color={Theme.colors.greenPrimary}
-                      />
-                    </Box>
-                  </TouchableOpacity>
-
-                  <Text
-                    variant="medium"
-                    textAlign="center"
-                    fontSize={14}
-                    color="white"
-                    marginLeft="l"
-                  >
-                    Swipe to agree & Continue
-                  </Text>
-                </Box>
-              </Swipeable>
+              <SwipeButton router={navigate} />
             )}
           </Box>
+
+          {modalVisible && (
+            <ModalWrapper
+              toggle={setModalVisible}
+              show={modalVisible}
+              propedStyle={{ backgroundColor: 'rgba(255,255,255, 0.3)' }}
+            >
+              <TermsArticle
+                router={navigate}
+                toggle={setModalVisible}
+                show={modalVisible}
+              />
+            </ModalWrapper>
+          )}
         </Box>
       </SafeWrapper>
     </Box>

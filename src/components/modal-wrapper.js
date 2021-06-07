@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { Modal, StyleSheet, TouchableOpacity } from 'react-native';
 import { Box } from '../utils/theme';
 
-export default function ModalWapper({ show, toggle, children }) {
+export default function ModalWapper({
+  show,
+  toggle,
+  children,
+  propedStyle,
+  tap2close,
+}) {
   const modalVisible = () => {
     toggle(show);
   };
@@ -25,9 +31,9 @@ export default function ModalWapper({ show, toggle, children }) {
           }}
         >
           <TouchableOpacity
-            style={styles.centeredView}
+            style={[styles.centeredView, propedStyle]}
             activeOpacity={1}
-            onPressOut={() => modalVisible()}
+            onPressOut={tap2close ? () => modalVisible() : null}
           >
             {children}
           </TouchableOpacity>
@@ -39,7 +45,5 @@ export default function ModalWapper({ show, toggle, children }) {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,.3)',
-    // justifyContent: 'center',
   },
 });

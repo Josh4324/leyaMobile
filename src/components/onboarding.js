@@ -117,7 +117,12 @@ export default function Onboarding({ navigation }) {
         )}
       </Box>
       {modalVisible && (
-        <ModalWrapper toggle={setModalVisible} show={modalVisible}>
+        <ModalWrapper
+          toggle={setModalVisible}
+          show={modalVisible}
+          propedStyle={{ backgroundColor: 'rgba(0,0,0,.3)' }}
+          tap2close={true}
+        >
           <AuthSheet router={navigate} toggle={setModalVisible} />
         </ModalWrapper>
       )}
