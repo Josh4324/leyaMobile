@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   disclaimer: {
     flexDirection: 'row',
-    minHeight: moderateScale(80),
+    minHeight: moderateScale(70),
     borderWidth: 1,
     borderColor: 'rgba(0, 161, 52, 0.6)',
     justifyContent: 'space-between',

@@ -14,8 +14,6 @@ import {
   Onboarding2,
   Onboarding3,
   Knot,
-  Ripple,
-  Success,
 } from './assets/images';
 
 const assets = [
@@ -26,8 +24,6 @@ const assets = [
   Onboarding2,
   Onboarding3,
   Knot,
-  Ripple,
-  Success,
 ];
 
 const fonts = {

@@ -5,12 +5,13 @@ import {
   StatusBar,
   TouchableOpacity,
   useWindowDimensions,
+  SafeAreaView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Theme, { Box, Text } from '../../utils/theme';
-import SafeWrapper from '../../components/safe-wrapper';
 import Knot from '../../../assets/images/knot.png';
 import { moderateScale } from 'react-native-size-matters';
+import SafeWrapper from '../../components/safe-wrapper';
 
 export default function Landing({ navigation }) {
   const { width } = useWindowDimensions();
@@ -19,18 +20,19 @@ export default function Landing({ navigation }) {
   return (
     <Box flex={1} backgroundColor="greenOpacity">
       <StatusBar barStyle="dark-content" backgroundColor="#E5F6EB" />
+
       <Box flex={0.7}>
         <Image source={Knot} style={{ width, resizeMode: 'cover' }} />
       </Box>
 
-      <Box flex={0.3} height="100%" justifyContent="space-between">
+      <Box flex={0.3} justifyContent="space-between">
         <Box padding="m">
-          <Text variant="title" color="black" lineHeight={45}>
+          <Text variant="title" fontSize={30} color="black" lineHeight={45}>
             Your all-in-one financial powerhouse
           </Text>
         </Box>
 
-        <Box style={{ height: moderateScale(80) }}>
+        <Box>
           <TouchableOpacity
             activeOpacity={0.8}
             style={{
@@ -38,7 +40,7 @@ export default function Landing({ navigation }) {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100%',
+              height: 100,
             }}
             onPress={() => navigate('Onboarding')}
           >

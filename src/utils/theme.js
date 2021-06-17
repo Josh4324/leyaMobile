@@ -5,7 +5,7 @@ const Theme = {
   colors: {
     greenPrimary: '#00A134',
     greenOpacity: '#E5F6EB',
-    ligtherGreen: '#F2F2F2',
+    ligtherGreen: '#F2FAF5',
     darkGreen: '#005E1E',
     gold: '#FFCA33',
     black: '#333333',

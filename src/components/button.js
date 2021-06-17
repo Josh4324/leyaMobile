@@ -17,7 +17,7 @@ export default function Button({ router, routeName, propedStyles, text }) {
         style={[styles.nextButton, propedStyles]}
         onPress={() => router(routeName)}
       >
-        <Text color="white" variant="heading" fontSize={20}>
+        <Text color="white" variant="medium" fontSize={20}>
           {text}
         </Text>
       </TouchableOpacity>

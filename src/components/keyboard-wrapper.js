@@ -8,7 +8,7 @@ export default function KeyboardWrapper({ children }) {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior="padding"
-      keyboardVerticalOffset={50}
+      keyboardVerticalOffset={20}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
     >
       {children}
