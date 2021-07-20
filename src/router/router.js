@@ -4,7 +4,7 @@ import AppStack from './AppStack';
 import { connect } from 'react-redux';
 
 const Router = () => {
-  return <AppStack />;
+  return <AuthStack />;
 };
 
 export default Router;

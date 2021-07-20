@@ -34,6 +34,8 @@ export default function Verification({ navigation }) {
     textInput.focus();
   });
 
+  //Pass touchable opacity on the cell view and call the textInput.focus()
+
   return (
     <SafeWrapper propedStyles={{ backgroundColor: 'white' }}>
       <KeyboardWrapper>

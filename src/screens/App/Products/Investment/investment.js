@@ -134,7 +134,7 @@ export default function Investment({ navigation }) {
             style={styles.button}
             onPress={() => navigate('InvestmentRequest')}
           >
-            <Text color="greenPrimary" variant="body" fontSize={20}>
+            <Text color="greenPrimary" variant="medium" fontSize={20}>
               Get Started
             </Text>
           </TouchableOpacity>

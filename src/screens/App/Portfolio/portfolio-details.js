@@ -11,7 +11,7 @@ export default function PortfolioDetails({ navigation }) {
     <Box flex={1} backgroundColor="inputBG">
       <StatusBar
         backgroundColor={Theme.colors.greenPrimary}
-        barStyle="light-content"
+        barStyle="dark-content"
       />
       <SafeWrapper propedStyles={{ flex: 1 }}>
         <Box

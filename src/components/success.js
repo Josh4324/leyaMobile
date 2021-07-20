@@ -18,7 +18,7 @@ import SafeWrapper from './safe-wrapper';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-export default function Success({ navigation }) {
+export default function Success({ navigation, text, routeName }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
 
@@ -50,7 +50,7 @@ export default function Success({ navigation }) {
               textAlign="center"
               marginTop="l"
             >
-              Your registration is successful!
+              {text}
             </Text>
           </Box>
           <Box
@@ -61,7 +61,7 @@ export default function Success({ navigation }) {
           >
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigate('AppStack')}
+              onPress={() => navigate(`{routeName}`)}
             >
               <Text color="greenPrimary" variant="medium" fontSize={20}>
                 Continue

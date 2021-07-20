@@ -12,6 +12,9 @@ import Investment from '../screens/App/Products/Investment/investment';
 import Loans from '../screens/App/Products/Loans/loans';
 import TrustFund from '../screens/App/Products/Trust/trust-fund';
 import InvestmentRequest from '../screens/App/Products/Investment/investment-request';
+import MaturityTenor from '../screens/App/Products/Investment/maturity-tenor';
+import InvestmentConfirmation from '../screens/App/Products/Investment/investment-confirmation';
+import Success from '../components/success';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,6 +47,12 @@ const InvestmentStack = () => {
     <Stack.Navigator headerMode="none" initialRouteName="Investment">
       <Stack.Screen name="Investment" component={Investment} />
       <Stack.Screen name="InvestmentRequest" component={InvestmentRequest} />
+      <Stack.Screen name="MaturityTenor" component={MaturityTenor} />
+      <Stack.Screen
+        name="InvestmentConfirmation"
+        component={InvestmentConfirmation}
+      />
+      <Stack.Screen name="InvestmentSuccess" component={Success} />
     </Stack.Navigator>
   );
 };

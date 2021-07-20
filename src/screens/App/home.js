@@ -44,6 +44,7 @@ export default function Home({ navigation }) {
           >
             <TouchableOpacity
               style={[styles.actionButton, { marginRight: 28 }]}
+              onPress={() => navigate('Investment')}
             >
               <Text color="white" variant="medium" fontSize={16}>
                 Add Funds
