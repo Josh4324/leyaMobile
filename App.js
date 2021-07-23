@@ -5,6 +5,7 @@ import { ThemeProvider } from '@shopify/restyle';
 import { Provider } from 'react-redux';
 import { LoadAssets, Theme } from './src/utils/index';
 import Router from './src/router/router';
+import store from './src/store/store';
 
 import {
   Icon,
@@ -35,11 +36,13 @@ const fonts = {
 };
 export default function App() {
   return (
-    <ThemeProvider theme={Theme}>
-      <LoadAssets {...{ assets, fonts }}>
-        <Router />
-      </LoadAssets>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <LoadAssets {...{ assets, fonts }}>
+          <Router />
+        </LoadAssets>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

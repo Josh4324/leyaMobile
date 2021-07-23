@@ -33,16 +33,27 @@ export default function PersonalInformation({ navigation }) {
         <Box style={styles.formBox} flex={0.7} paddingHorizontal="m">
           <Box style={styles.formGroup}>
             <Text variant="medium" color="primaryText" fontSize={22}>
-              What is your legal name?
+              What is your first name?
             </Text>
             <TextInput
               style={[styles.input]}
-              placeholder="Enter your name here"
+              placeholder="first name here"
               keyboardType="default"
             />
           </Box>
 
-          <Box style={styles.formGroup} marginTop="xxxl">
+          <Box style={styles.formGroup} marginTop="xl">
+            <Text variant="medium" color="primaryText" fontSize={22}>
+              What is your last name?
+            </Text>
+            <TextInput
+              style={[styles.input]}
+              placeholder="last name here"
+              keyboardType="default"
+            />
+          </Box>
+
+          <Box style={styles.formGroup} marginTop="xl">
             <Text variant="medium" color="primaryText" fontSize={22}>
               And your email address?
             </Text>

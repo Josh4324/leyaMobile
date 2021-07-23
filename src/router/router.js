@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
 import { connect } from 'react-redux';
 
-const Router = () => {
-  return <AuthStack />;
+const Router = ({ auth }) => {
+  console.log('auth', auth);
+  return auth.isAuthenticated ? <AppStack /> : <AuthStack />;
 };
-
-export default Router;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, {})(Router);

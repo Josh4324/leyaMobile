@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -16,11 +16,28 @@ import SuccessSVG from '../../assets/images/success.svg';
 import PatternSVG from '../../assets/images/pattern.svg';
 import SafeWrapper from './safe-wrapper';
 
+import { connect } from 'react-redux';
+import { RegisterUser } from '../store/Authentication/auth-actions';
+
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-export default function Success({ navigation, text, routeName }) {
+function Success({ navigation, text, routeName, RegisterUser, auth }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
+
+  const user = { name: 'folarin farinto' };
+
+  const register = (user) => {
+    RegisterUser(user);
+  };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigation.navigate('Home');
+    }
+  }, [auth]);
+
+  console.log('a', auth);
 
   return (
     <Box style={styles.wrapper} flex={1} position="relative">
@@ -61,7 +78,7 @@ export default function Success({ navigation, text, routeName }) {
           >
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigate(`{routeName}`)}
+              onPress={() => register(user)}
             >
               <Text color="greenPrimary" variant="medium" fontSize={20}>
                 Continue
@@ -73,6 +90,11 @@ export default function Success({ navigation, text, routeName }) {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { RegisterUser })(Success);
 
 const styles = StyleSheet.create({
   wrapper: {
