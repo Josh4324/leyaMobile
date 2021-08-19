@@ -7,14 +7,24 @@ import Home from '../screens/App/home';
 import Products from '../screens/App/Products/products';
 import Portfolio from '../screens/App/Portfolio/portfolio';
 import Settings from '../screens/App/Settings/settings';
+import UpdateInformation from '../screens/App/Settings/update-information';
 import PortfolioDetails from '../screens/App/Portfolio/portfolio-details';
 import Investment from '../screens/App/Products/Investment/investment';
+
 import Loans from '../screens/App/Products/Loans/loans';
+import LoanProducts from '../screens/App/Products/Loans/products';
+import LoanAmount from '../screens/App/Products/Loans/loan-amount';
+import LoanTenor from '../screens/App/Products/Loans/loan-tenor';
+import LoanConfirmation from '../screens/App/Products/Loans/loan-confirmation';
+import ActiveLoan from '../screens/App/Products/Loans/active-loan';
+import LoanSuccess from '../screens/App/Products/Loans/LoanSuccess';
+
 import TrustFund from '../screens/App/Products/Trust/trust-fund';
 import InvestmentRequest from '../screens/App/Products/Investment/investment-request';
 import MaturityTenor from '../screens/App/Products/Investment/maturity-tenor';
 import InvestmentConfirmation from '../screens/App/Products/Investment/investment-confirmation';
 import Success from '../components/success';
+import LoanDetails from '../screens/App/Products/Loans/loan-details';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +71,12 @@ const LoanStack = () => {
   return (
     <Stack.Navigator headerMode="none" initialRouteName="Loans">
       <Stack.Screen name="Loans" component={Loans} />
+      <Stack.Screen name="LoanProducts" component={LoanProducts} />
+      <Stack.Screen name="LoanAmount" component={LoanAmount} />
+      <Stack.Screen name="LoanTenor" component={LoanTenor} />
+      <Stack.Screen name="LoanConfirmation" component={LoanConfirmation} />
+      <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
+      <Stack.Screen name="LoanSuccess" component={LoanSuccess} />
     </Stack.Navigator>
   );
 };
@@ -77,6 +93,7 @@ const SettingsStack = () => {
   return (
     <Stack.Navigator headerMode="none" initialRouteName="Settings">
       <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="UpdateInformation" component={UpdateInformation} />
     </Stack.Navigator>
   );
 };
@@ -102,7 +119,7 @@ const HomeTabs = () => {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Products" component={ProductStack} />
-      <Tab.Screen name="Portfolio" component={PortfolioStack} />
+      <Tab.Screen name="Portfolio" component={PortfolioDetails} />
       <Tab.Screen name="Settings" component={SettingsStack} />
     </Tab.Navigator>
   );
@@ -115,6 +132,8 @@ const AppStack = () => {
       <Stack.Screen name="PortfolioDetails" component={PortfolioDetails} />
       <Stack.Screen name="Investment" component={InvestmentStack} />
       <Stack.Screen name="Loans" component={LoanStack} />
+      <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
+      <Stack.Screen name="LoanDetails" component={LoanDetails} />
       <Stack.Screen name="TrustFund" component={TrustFund} />
     </Stack.Navigator>
   );

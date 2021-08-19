@@ -1,0 +1,16 @@
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_ERRORS = 'GET_ERRORS';
+export const SET_ALERT = 'SET_ALERT';
+export const LOADING = 'LOADING';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const REGISTER_USER = 'REGISTER_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const LOGIN_USER = 'LOGIN_USER';
+export const REQUEST_VERIFICATION_CODE = 'REQUEST_VERIFICATION_CODE';
+
+export const VERIFY_CODE = 'VERIFY_CODE';
+
+export const LOGOUT = 'LOGOUT';
+
+export const COMPLETE_REGISTRATION = 'COMPLETE_REGISTRATION';

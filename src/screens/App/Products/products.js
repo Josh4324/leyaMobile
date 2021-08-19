@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { moderateScale } from 'react-native-size-matters';
 import Theme, { Box, Text } from '../../../utils/theme';
 import ScrollWrapper from '../../../components/scroll-wrapper';
 import SafeWrapper from '../../../components/safe-wrapper';
+
+import { connect } from 'react-redux';
 
 import InvestmentSVG from '../../../../assets/images/investment.svg';
 import InvestSVG from '../../../../assets/images/invest.svg';
 import Coins from '../../../../assets/images/coins.svg';
 import Loans from '../../../../assets/images/loans.svg';
 import Trust from '../../../../assets/images/trust.svg';
-export default function Products({ navigation }) {
+
+function Products({ navigation, loan }) {
   const { navigate } = navigation;
+  const [route, setRoute] = useState('');
+  console.log(loan);
+
+  useEffect(() => {
+    if (Object.keys(loan).length !== 0) {
+      setRoute('ActiveLoan');
+    } else {
+      setRoute('Loans');
+    }
+  });
+
   return (
     <Box flex={1}>
       <Box backgroundColor="greenPrimary" flex={0.3}>
@@ -81,7 +94,7 @@ export default function Products({ navigation }) {
             </Box>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigate('Loans')}>
+          <TouchableOpacity onPress={() => navigate(route)}>
             <Box style={styles.productBox}>
               <Text variant="medium" marginTop="s" fontSize={18} color="black">
                 Loans
@@ -143,3 +156,9 @@ const styles = StyleSheet.create({
     padding: Theme.spacing.m,
   },
 });
+
+const mapStateToProps = (state) => ({
+  loan: state.loans?.loan,
+});
+
+export default connect(mapStateToProps, {})(Products);

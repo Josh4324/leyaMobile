@@ -1,0 +1,12 @@
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_ERRORS = 'GET_ERRORS';
+export const LOADING = 'LOADING';
+
+export const REQUEST_LOAN = 'REQUEST_LOAN';
+
+export const SET_LOAN_AMOUNT = 'SET_LOAN_AMOUNT';
+export const SET_LOAN_TENOR = 'SET_LOAN_TENOR';
+export const SELECTED_LOAN = 'SELECTED_LOAN';
+export const GET_CUSTOMER_LOAN = 'GET_CUSTOMER_LOAN';
+export const GET_LOAN_DETAILS = 'GET_LOAN_DETAILS';
+export const FETCH_LOAN_PRODUCTS = 'FETCH_LOAN_PRODUCTS';

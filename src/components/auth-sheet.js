@@ -21,7 +21,13 @@ export default function AuthSheet({ router, toggle }) {
       </Text>
 
       <Box marginTop="xl">
-        <TouchableOpacity style={styles.lightButton}>
+        <TouchableOpacity
+          style={styles.lightButton}
+          onPress={() => {
+            router('Login');
+            toggle(false);
+          }}
+        >
           <Text variant="medium" fontSize={16} color="greenPrimary">
             Yes, I am an Existing Customer
           </Text>

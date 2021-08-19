@@ -12,11 +12,11 @@ import { moderateScale } from 'react-native-size-matters';
 import SafeWrapper from './safe-wrapper';
 import { Ionicons } from '@expo/vector-icons';
 import Theme, { Box, Text } from '../utils/theme';
-import Pattern from '../../assets/images/home-pattern.svg';
+import Loans from '../../assets/images/loans.svg';
 import Plant from '../../assets/images/plant.svg';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-export default function AccountCard({ router }) {
+export default function LoanCard({ router }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [amount, setAmount] = useState('0');
 
@@ -30,6 +30,14 @@ export default function AccountCard({ router }) {
       <Box style={styles.cardInner}>
         <Box style={styles.shadow} />
         <Box style={styles.shadow2} />
+
+        <Loans
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: -2,
+          }}
+        />
 
         <Plant
           style={{
@@ -51,29 +59,14 @@ export default function AccountCard({ router }) {
           <Box flexDirection="row" justifyContent="space-between">
             <Box marginTop="m">
               <Text variant="heading" color="primaryText" fontSize={20}>
-                ₦{isEnabled ? maskAmount(amount) : amount}
+                ₦{amount}
               </Text>
               <Text variant="body" fontSize={14} marginTop="s">
-                Your Portfolio
+                Your Loan
               </Text>
             </Box>
 
-            <Box
-              flexDirection="row"
-              alignItems="center"
-              style={{ marginTop: -50 }}
-            >
-              <Text fontSize={12} marginRight="s">
-                Hide Amount
-              </Text>
-              <Switch
-                trackColor={{ false: '#767577', true: '#00A134' }}
-                thumbColor={isEnabled ? '#E5F6EB' : '#f4f3f4'}
-                ios_backgroundColor="rgba(143, 155, 179, 0.16);"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-            </Box>
+            <Box></Box>
           </Box>
         </Box>
 
@@ -89,7 +82,7 @@ export default function AccountCard({ router }) {
           </Text>
           <TouchableOpacity
             style={styles.nextButton}
-            onPress={() => router('PortfolioDetails')}
+            onPress={() => router('LoanDetails')}
           >
             <Box>
               <Ionicons
@@ -117,7 +110,6 @@ const styles = StyleSheet.create({
     width: WIDTH - 30,
     marginTop: Theme.spacing.l,
     borderRadius: 10,
-
     position: 'absolute',
   },
   shadow: {

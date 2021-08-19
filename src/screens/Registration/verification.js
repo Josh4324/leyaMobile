@@ -2,12 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Dimensions,
-  TextInput,
-  KeyboardAvoidingView,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
+import {
+  RequestVerificationCode,
+  VerifyCode,
+} from '../../redux/Authentication/auth-actions';
 
 import SafeWrapper from '../../components/safe-wrapper';
 import Button from '../../components/button';
@@ -17,24 +23,34 @@ import KeyboardWrapper from '../../components/keyboard-wrapper';
 
 const { width: WIDTH } = Dimensions.get('window');
 
-export default function Verification({ navigation }) {
+function Verification({
+  navigation,
+  RequestVerificationCode,
+  VerifyCode,
+  errors,
+  loading,
+}) {
   const { navigate } = navigation;
-  let textInput = useRef(null);
-  const lengthInput = 5;
 
-  const [internalVal, setInternalVal] = useState('');
-
-  const onChangeText = (val) => {
-    setInternalVal(val);
-  };
-
-  console.log('int: ', internalVal);
+  const [OTPCode, setOTPCode] = useState('');
+  const [phone, setPhone] = useState('');
 
   useEffect(() => {
-    textInput.focus();
+    (async () => {
+      let ph = await AsyncStorage.getItem('phoneNumber');
+      setPhone(ph);
+    })();
   });
 
-  //Pass touchable opacity on the cell view and call the textInput.focus()
+  const onVerify = async () => {
+    console.log(phone);
+    VerifyCode(OTPCode, phone, navigate);
+  };
+
+  const onResend = () => {
+    const payload = { username: phone };
+    RequestVerificationCode(payload, navigate);
+  };
 
   return (
     <SafeWrapper propedStyles={{ backgroundColor: 'white' }}>
@@ -49,56 +65,30 @@ export default function Verification({ navigation }) {
           />
         </Box>
 
-        <Box style={styles.formBox} flex={0.7} paddingHorizontal="m">
+        <Box
+          style={styles.formBox}
+          flex={0.7}
+          paddingHorizontal="m"
+          marginTop="l"
+        >
           <Box style={styles.formGroup}>
             <Text variant="medium" color="primaryText" fontSize={22}>
               Verification Code
             </Text>
 
-            <TextInput
-              ref={(input) => (textInput = input)}
-              style={{ width: 0, height: 0 }}
-              keyboardType="numeric"
-              returnKeyType="done"
-              secureTextEntry={true}
-              maxLength={lengthInput}
-              value={internalVal}
-              onChangeText={onChangeText}
+            <OTPInputView
+              style={{ width: '100%', height: 80, marginTop: Theme.spacing.m }}
+              pinCount={5}
+              code={OTPCode}
+              onCodeChanged={(code) => {
+                setOTPCode(code);
+              }}
+              autoFocusOnLoad
+              placeholderTextColor={Theme.colors.greenPrimary}
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
             />
           </Box>
-
-          <Box marginTop="xl" style={styles.containerInput}>
-            {Array(lengthInput)
-              .fill()
-              .map((data, index) => (
-                <Box
-                  style={[
-                    styles.cellView,
-                    {
-                      borderColor:
-                        index === internalVal.length
-                          ? '#00A134'
-                          : 'rgba(218, 218, 218, 0.4)',
-                    },
-                  ]}
-                  key={index}
-                >
-                  <Text
-                    color="primaryText"
-                    variant="medium"
-                    fontSize={16}
-                    onPress={() => {
-                      textInput.focus();
-                    }}
-                  >
-                    {internalVal && internalVal.length > 0
-                      ? internalVal[index]
-                      : ''}
-                  </Text>
-                </Box>
-              ))}
-          </Box>
-
           <Box
             flexDirection="row"
             alignItems="center"
@@ -116,6 +106,7 @@ export default function Verification({ navigation }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
+                onPress={() => onResend()}
               >
                 <Ionicons
                   name="return-up-back-outline"
@@ -133,6 +124,29 @@ export default function Verification({ navigation }) {
               </TouchableOpacity>
             </Box>
           </Box>
+
+          <Box paddingHorizontal="m" marginTop="xl" style={styles.disclaimer}>
+            <Box alignItems="center" style={styles.whyBox} flex={0.1}>
+              <Ionicons
+                name="bulb-outline"
+                color={Theme.colors.greenPrimary}
+                size={32}
+              />
+            </Box>
+
+            <Box flex={0.9} marginLeft="m">
+              <Text
+                color="greenPrimary"
+                variant="body"
+                fontSize={13}
+                lineHeight={20}
+              >
+                The OTP sent to your phone expires in 05:00 minutes
+              </Text>
+            </Box>
+          </Box>
+
+          <Text color="red">{errors?.message}</Text>
         </Box>
 
         <Box
@@ -140,8 +154,13 @@ export default function Verification({ navigation }) {
           paddingHorizontal="m"
           alignItems="center"
           justifyContent="center"
+          marginBottom="m"
         >
-          <Button router={navigate} routeName="Passcode" text="Next" />
+          {!loading ? (
+            <Button text="Next" action={onVerify} />
+          ) : (
+            <ActivityIndicator size="small" color="#00A134" />
+          )}
         </Box>
       </KeyboardWrapper>
     </SafeWrapper>
@@ -166,4 +185,37 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.inputBG,
     borderColor: 'rgba(218, 218, 218, 0.4)',
   },
+
+  underlineStyleBase: {
+    width: 60,
+    height: 50,
+    borderWidth: 0,
+    borderWidth: 1.5,
+    borderRadius: Theme.borderRadii.s,
+    borderColor: 'rgba(218, 218, 218, 0.4)',
+    color: Theme.colors.greenPrimary,
+    fontSize: 16,
+  },
+  underlineStyleHighLighted: {
+    borderColor: Theme.colors.gold,
+  },
+  disclaimer: {
+    flexDirection: 'row',
+    minHeight: moderateScale(80),
+    borderWidth: 1,
+    borderColor: 'rgba(0, 161, 52, 0.6)',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: Theme.colors.greenOpacity,
+  },
 });
+
+const mapStateToProps = (state) => ({
+  errors: state.auth.errors,
+  loading: state.auth.loading,
+});
+export default connect(mapStateToProps, {
+  RequestVerificationCode,
+  VerifyCode,
+})(Verification);

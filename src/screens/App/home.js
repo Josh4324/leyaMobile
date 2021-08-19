@@ -1,23 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import SafeWrapper from '../../components/safe-wrapper';
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import Theme, { Box, Text } from '../../utils/theme';
 import Pattern from '../../../assets/images/home-pattern.svg';
 import { moderateScale } from 'react-native-size-matters';
+import { GetCustomerLoans } from '../../redux/Loans/loan-actions';
 
 import AppHeader from '../../components/app-header';
 import AccountCard from '../../components/account-card';
 import EmptyState from '../../components/empty-state';
 
-export default function Home({ navigation }) {
+import 'intl';
+import 'intl/locale-data/jsonp/en-NG';
+
+if (Platform.OS === 'android') {
+  if (typeof Intl.__disableRegExpRestore === 'function') {
+    Intl.__disableRegExpRestore();
+  }
+}
+
+function Home({ navigation, user, loan, GetCustomerLoans }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
+
+  console.log(user);
+
+  function formatCurrency(num) {
+    return Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+    }).format(num);
+  }
+
+  useEffect(() => {
+    let id = user?.customer.customerId;
+    GetCustomerLoans(id);
+  }, [GetCustomerLoans]);
 
   return (
     <Box flex={1}>
@@ -34,7 +62,7 @@ export default function Home({ navigation }) {
               resizeMode: 'cover',
             }}
           />
-          <AppHeader />
+          <AppHeader name={user?.user?.firstName} router={navigate} />
           <AccountCard router={navigate} />
 
           <Box
@@ -73,7 +101,57 @@ export default function Home({ navigation }) {
           </Box>
         </SafeWrapper>
       </Box>
-      <EmptyState />
+
+      {Object.keys(loan).length === 0 ? (
+        <EmptyState />
+      ) : (
+        <Suspense fallback={<ActivityIndicator size="small" color="#00A134" />}>
+          <Box flex={0.5}>
+            <Box
+              padding="m"
+              flex={0.1}
+              backgroundColor="white"
+              justifyContent="center"
+            >
+              <Text variant="medium" fontSize={18}>
+                Activities
+              </Text>
+            </Box>
+            <TouchableOpacity onPress={() => navigate('ActiveLoan')}>
+              <Box
+                backgroundColor="inputBG"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                padding="s"
+                borderTopWidth={1}
+                borderBottomWidth={1}
+                borderBottomColor="border"
+                borderTopColor="border"
+              >
+                <Box style={styles.activityIcon}>
+                  <Ionicons
+                    name="checkmark-done-outline"
+                    size={22}
+                    color={Theme.colors.greenPrimary}
+                  />
+                </Box>
+                <Box>
+                  <Text variant="medium" color="dark">
+                    Loan Request Submitted
+                  </Text>
+                  <Text variant="body" color="primaryText" fontSize={12}>
+                    {loan.creatDate}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text>{formatCurrency(loan.loanAmount)}</Text>
+                </Box>
+              </Box>
+            </TouchableOpacity>
+          </Box>
+        </Suspense>
+      )}
     </Box>
   );
 }
@@ -97,4 +175,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  activityIcon: {
+    height: 54,
+    width: 54,
+    marginLeft: 10,
+    backgroundColor: Theme.colors.greenOpacity,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
 });
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  loan: state.loans.loan,
+});
+export default connect(mapStateToProps, { GetCustomerLoans })(Home);

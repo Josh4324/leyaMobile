@@ -132,7 +132,7 @@ export default function Loans({ navigation }) {
         >
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigate('InvestmentRequest')}
+            onPress={() => navigate('LoanProducts')}
           >
             <Text color="greenPrimary" variant="body" fontSize={20}>
               Get Started

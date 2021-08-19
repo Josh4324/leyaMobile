@@ -3,35 +3,23 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  ImageBackground,
   useWindowDimensions,
-  Image,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import Button from '../components/button';
-import Theme, { Box, Text } from '../utils/theme';
-import Ripple from '../../assets/images/ripple.png';
-import SuccessSVG from '../../assets/images/success.svg';
-import PatternSVG from '../../assets/images/pattern.svg';
-import SafeWrapper from './safe-wrapper';
+import Theme, { Box, Text } from '../../../../utils/theme';
+import SuccessSVG from '../../../../../assets/images/success.svg';
+import PatternSVG from '../../../../../assets/images/pattern.svg';
+import SafeWrapper from '../../../../components/safe-wrapper';
 
 import { connect } from 'react-redux';
-import { CompleteRegistation } from '../redux/Authentication/auth-actions';
+// import { CompleteRegistation } from '../redux/Authentication/auth-actions';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-function Success({ navigation, text, routeName, CompleteRegistation, auth }) {
+function LoanSuccess({ navigation, text, auth }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
 
-  const completeRegistation = () => {
-    CompleteRegistation();
-  };
-
   useEffect(() => {}, []);
-
-  console.log('a', auth);
 
   return (
     <Box style={styles.wrapper} flex={1} position="relative">
@@ -72,7 +60,7 @@ function Success({ navigation, text, routeName, CompleteRegistation, auth }) {
           >
             <TouchableOpacity
               style={styles.button}
-              onPress={() => completeRegistation()}
+              onPress={() => navigate('ActiveLoan')}
             >
               <Text color="greenPrimary" variant="medium" fontSize={20}>
                 Continue
@@ -88,7 +76,7 @@ function Success({ navigation, text, routeName, CompleteRegistation, auth }) {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { CompleteRegistation })(Success);
+export default connect(mapStateToProps, {})(LoanSuccess);
 
 const styles = StyleSheet.create({
   wrapper: {

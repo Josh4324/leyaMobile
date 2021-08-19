@@ -15,6 +15,7 @@ const Theme = {
     red: '#F85857',
     white: '#ffffff',
     inputBG: '#F9F9F9',
+    border: '#EDEBEB',
   },
   spacing: {
     s: 8,

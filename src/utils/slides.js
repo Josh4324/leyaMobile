@@ -4,14 +4,14 @@ export default [
     title: 'Be a part of our 4:24 scheme',
     image: require('../../assets/images/onboarding1.png'),
     description:
-      'We offer a 4% flat per cycle on any investment within our single obligor limit. Cycle starts and ends on the 24th of every month.',
+      'We offer up to 4% flat per cycle on any investment within our single obligor limit. Cycle starts and ends on the 24th of every month.',
   },
   {
     id: '2',
     title: 'Quick and Easy access to Loans',
     image: require('../../assets/images/onboarding2.png'),
     description:
-      'We lend funds to salary earners and business owners in need of cash at a 10% flat rate anytime and from anywhere. ',
+      'We lend funds to salary earners and business owners in need of cash at a flexible rates anytime and from anywhere. ',
   },
   {
     id: '3',

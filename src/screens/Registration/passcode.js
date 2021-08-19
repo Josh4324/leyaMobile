@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Dimensions, Alert, TouchableOpacity } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { Ionicons } from '@expo/vector-icons';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import validator from 'validator';
 
 import SafeWrapper from '../../components/safe-wrapper';
-import Button from '../../components/button';
 import Theme, { Box, Text } from '../../utils/theme';
 import RegistrationHeader from '../../components/registration-header';
 import KeyboardWrapper from '../../components/keyboard-wrapper';
@@ -19,20 +15,24 @@ const { width: WIDTH } = Dimensions.get('window');
 
 export default function Passcode({ navigation }) {
   const { navigate } = navigation;
-  let textInput = useRef(null);
-  const lengthInput = 6;
 
-  const [internalVal, setInternalVal] = useState('');
+  const [passcode, setPassCode] = useState('');
 
-  const onChangeText = (val) => {
-    setInternalVal(val);
+  console.log('passcode: ', passcode);
+
+  const onSetPassCode = async () => {
+    if (
+      !validator.isLength(passcode.trim(), {
+        min: 6,
+        max: 6,
+      })
+    ) {
+      return Alert.alert('Error', 'Your passcode must be 6 digits');
+    } else {
+      await AsyncStorage.setItem('passcode', passcode);
+      navigate('PasscodeConfirmation');
+    }
   };
-
-  console.log('int: ', internalVal);
-
-  useEffect(() => {
-    textInput.focus();
-  });
 
   return (
     <SafeWrapper propedStyles={{ backgroundColor: 'white' }}>
@@ -53,50 +53,26 @@ export default function Passcode({ navigation }) {
               Create a Passcode
             </Text>
 
-            <TextInput
-              ref={(input) => (textInput = input)}
-              style={{ width: 0, height: 0 }}
-              keyboardType="numeric"
-              returnKeyType="done"
-              maxLength={lengthInput}
-              value={internalVal}
-              onChangeText={onChangeText}
+            <OTPInputView
+              style={{
+                width: '50%',
+                height: 50,
+                marginTop: Theme.spacing.m,
+              }}
+              pinCount={6}
+              code={passcode}
+              onCodeChanged={(code) => {
+                setPassCode(code);
+              }}
+              autoFocusOnLoad
+              secureTextEntry={true}
+              placeholderTextColor={Theme.colors.gold}
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              onCodeFilled={(code) => {
+                console.log(`Code is ${code}, you are good to go!`);
+              }}
             />
-          </Box>
-
-          <Box marginTop="xl" style={styles.containerInput}>
-            {Array(lengthInput)
-              .fill()
-              .map((data, index) => (
-                <Box
-                  style={[
-                    styles.cellView,
-                    {
-                      borderColor:
-                        index === internalVal.length
-                          ? '#FFCA33'
-                          : 'rgba(218, 218, 218, 0.4)',
-                      backgroundColor:
-                        internalVal[index] > 0
-                          ? '#FFCA33'
-                          : 'rgba(218, 218, 218, 0.4)',
-                    },
-                  ]}
-                  key={index}
-                >
-                  {/* <Text
-                    color="gold"
-                    variant="medium"
-                    fontSize={18}
-                    textAlign="center"
-                    onPress={() => {
-                      textInput.focus();
-                    }}
-                  >
-                    {internalVal && internalVal.length > 0 ? '•' : ''}
-                  </Text> */}
-                </Box>
-              ))}
           </Box>
 
           <Box paddingHorizontal="m" marginTop="xxxl" style={styles.disclaimer}>
@@ -128,11 +104,14 @@ export default function Passcode({ navigation }) {
           alignItems="center"
           justifyContent="center"
         >
-          <Button
-            router={navigate}
-            routeName="PasscodeConfirmation"
-            text="Next"
-          />
+          <TouchableOpacity
+            style={[styles.nextButton]}
+            onPress={() => onSetPassCode()}
+          >
+            <Text color="white" variant="medium" fontSize={20}>
+              Next
+            </Text>
+          </TouchableOpacity>
         </Box>
       </KeyboardWrapper>
     </SafeWrapper>
@@ -145,19 +124,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  cellView: {
-    // paddingVertical: 11,
-    width: 15,
-    height: 15,
-    margin: 5,
+  underlineStyleBase: {
+    width: 20,
+    height: 20,
+    borderWidth: 0,
+    borderWidth: 1.5,
+    borderRadius: Theme.borderRadii.l,
+    borderColor: 'rgba(218, 218, 218, 0.4)',
+    color: Theme.colors.greenPrimary,
+    fontSize: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1.5,
-    borderRadius: 100,
-    backgroundColor: Theme.colors.inputBG,
-    borderColor: 'rgba(218, 218, 218, 0.4)',
-    zIndex: 1,
+    backgroundColor: 'rgba(218, 218, 218, 0.4)',
   },
+  underlineStyleHighLighted: {
+    borderColor: Theme.colors.gold,
+    borderWidth: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   disclaimer: {
     flexDirection: 'row',
     minHeight: moderateScale(80),
@@ -167,5 +153,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: Theme.colors.greenOpacity,
+  },
+  nextButton: {
+    width: WIDTH - 40,
+    height: 55,
+    backgroundColor: Theme.colors.greenPrimary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: Theme.borderRadii.s,
   },
 });
