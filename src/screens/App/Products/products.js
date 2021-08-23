@@ -13,16 +13,23 @@ import Coins from '../../../../assets/images/coins.svg';
 import Loans from '../../../../assets/images/loans.svg';
 import Trust from '../../../../assets/images/trust.svg';
 
-function Products({ navigation, loan }) {
+function Products({ navigation, loan, investments }) {
   const { navigate } = navigation;
   const [route, setRoute] = useState('');
-  console.log(loan);
+  const [investmentRoute, setInvestmentRoute] = useState('');
+  console.log(investments);
 
   useEffect(() => {
     if (Object.keys(loan).length !== 0) {
       setRoute('ActiveLoan');
     } else {
       setRoute('Loans');
+    }
+
+    if (investments.length !== 0) {
+      setInvestmentRoute('ActiveInvestment');
+    } else {
+      setInvestmentRoute('Investment');
     }
   });
 
@@ -56,7 +63,7 @@ function Products({ navigation, loan }) {
         <ScrollWrapper>
           <TouchableOpacity
             style={{ position: 'relative' }}
-            onPress={() => navigate('Investment')}
+            onPress={() => navigate(investmentRoute)}
           >
             <Box style={styles.productBox}>
               <Text variant="medium" marginTop="s" fontSize={18} color="black">
@@ -159,6 +166,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   loan: state.loans?.loan,
+  investments: state.investments?.investments,
 });
 
 export default connect(mapStateToProps, {})(Products);

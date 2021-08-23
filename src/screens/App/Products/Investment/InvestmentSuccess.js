@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-function LoanSuccess({ navigation, text, auth }) {
+function InvestmentSuccess({ navigation, text, auth }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
 
@@ -37,8 +37,13 @@ function LoanSuccess({ navigation, text, auth }) {
             />
           </Box>
 
-          <Box justifyContent="flex-start" alignItems="center" flex={0.3}>
-            <Text color="white" variant="medium" fontSize={30} marginTop="l">
+          <Box
+            justifyContent="center"
+            alignItems="center"
+            flex={0.3}
+            paddingHorizontal="m"
+          >
+            <Text color="white" variant="medium" fontSize={30}>
               Congratulations!
             </Text>
             <Text
@@ -60,7 +65,7 @@ function LoanSuccess({ navigation, text, auth }) {
           >
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigate('ActiveLoan')}
+              onPress={() => navigate('ActiveInvestment')}
             >
               <Text color="greenPrimary" variant="medium" fontSize={20}>
                 Continue
@@ -76,7 +81,7 @@ function LoanSuccess({ navigation, text, auth }) {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, {})(LoanSuccess);
+export default connect(mapStateToProps, {})(InvestmentSuccess);
 
 const styles = StyleSheet.create({
   wrapper: {

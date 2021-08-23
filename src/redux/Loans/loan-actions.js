@@ -50,7 +50,7 @@ export const RequestLoan = (payload, navigate) => async (dispatch) => {
 };
 
 export const GetCustomerLoans = (id) => async (dispatch) => {
-  console.log('cID', id);
+  // console.log('cID', id);
   try {
     dispatch(setLoading());
     dispatch(clearErrors());
@@ -58,7 +58,7 @@ export const GetCustomerLoans = (id) => async (dispatch) => {
       `http://142.93.58.146:9095/Loan/v1/getLoansByCustomer?custNo=${id}`
     );
 
-    console.log(response.data.loans);
+    // console.log(response.data.loans);
 
     if (response.data.code === 0) {
       dispatch({

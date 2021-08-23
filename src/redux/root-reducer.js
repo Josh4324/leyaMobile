@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import AuthReducer from './Authentication/auth-reducer';
 import LoanReducer from './Loans/loan-reducer';
+import InvestmentReducer from './Investments/investment-reducer';
 import AlertReducer from './Alert/alert-reducer';
 import ErrorReducer from './error-reducer';
 
@@ -9,4 +10,5 @@ export default combineReducers({
   errors: ErrorReducer,
   alert: AlertReducer,
   loans: LoanReducer,
+  investments: InvestmentReducer,
 });

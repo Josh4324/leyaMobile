@@ -1,7 +1,6 @@
 import * as actionTypes from './auth-types';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setAlert } from '../Alert/alert-actions';
 
 let url = 'http://142.93.58.146:2708';
 
@@ -49,6 +48,10 @@ export const LoginUser = (payload) => async (dispatch) => {
       });
 
       await AsyncStorage.setItem('email', payload.userId);
+      await AsyncStorage.setItem(
+        'firstName',
+        response.data.data.customer.firstName
+      );
       // navigate('Home');
     }
     console.log(response.data);

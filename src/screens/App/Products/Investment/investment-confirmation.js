@@ -3,143 +3,202 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
-  TextInput,
   Dimensions,
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
+import moment from 'moment';
+
+import 'intl';
+import 'intl/locale-data/jsonp/en-NG';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { moderateScale } from 'react-native-size-matters';
 import SafeWrapper from '../../../../components/safe-wrapper';
 import Theme, { Box, Text } from '../../../../utils/theme';
+import ScrollWrapper from '../../../../components/scroll-wrapper';
+import { RequestInvestment } from '../../../../redux/Investments/investment-actions';
 
 const { width: WIDTH } = Dimensions.get('window');
-export default function InvestmentConfirmation({ navigation }) {
-  const [tenor, setTenor] = useState('');
-  const [agree, setAgree] = useState(false);
+
+if (Platform.OS === 'android') {
+  if (typeof Intl.__disableRegExpRestore === 'function') {
+    Intl.__disableRegExpRestore();
+  }
+}
+function InvestmentConfirmation({
+  navigation,
+  investmentAmount,
+  investmentTenor,
+  RequestInvestment,
+  errors,
+  user,
+  loading,
+}) {
   const { navigate } = navigation;
+
+  function formatCurrency(num) {
+    return Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+    }).format(num);
+  }
+
+  const onRequest = () => {
+    const payload = {
+      accountManagerId: 1,
+      investmentProductId: 1,
+      tenor: investmentTenor,
+      customerId: user.customer.customerId,
+      amount: parseInt(investmentAmount),
+      startDate: moment(Date.now()).format('YYYY-MM-DD'),
+    };
+    console.log(payload);
+    RequestInvestment(payload, navigate);
+  };
 
   return (
     <Box flex={1} backgroundColor="white">
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
-      <Box
-        flexDirection="row"
-        paddingHorizontal="m"
-        flex={0.1}
-        justifyContent="space-between"
-        backgroundColor="white"
-        alignItems="flex-end"
-        paddingVertical="m"
+      <SafeWrapper
+        propedStyles={{
+          flex: 1,
+          padding: 0,
+          margin: 0,
+        }}
       >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons
-            name="chevron-back-outline"
-            color={Theme.colors.greenPrimary}
-            size={28}
-          />
-        </TouchableOpacity>
-        <Text variant="medium" fontSize={16}>
-          Confirm Request
-        </Text>
-        <TouchableOpacity>
-          <Text variant="medium" fontSize={16} color="red">
-            Cancel
+        <Box
+          flexDirection="row"
+          paddingHorizontal="m"
+          flex={0.03}
+          justifyContent="space-between"
+          backgroundColor="white"
+          alignItems="flex-end"
+          alignContent="center"
+          paddingVertical="s"
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="chevron-back-outline"
+              color={Theme.colors.greenPrimary}
+              size={28}
+            />
+          </TouchableOpacity>
+          <Text variant="medium" fontSize={16}>
+            Confirm Request
           </Text>
-        </TouchableOpacity>
-      </Box>
-
-      <Box flex={0.9}>
-        <SafeWrapper>
-          <Box
-            flex={0.2}
-            backgroundColor="white"
-            justifyContent="center"
-            alignItems="flex-start"
-            paddingHorizontal="m"
-            paddingVertical="l"
-          >
-            <Text variant="title" color="black" fontSize={32} lineHeight={35}>
-              Let’s go over your top-up request
+          <TouchableOpacity onPress={() => navigate('Products')}>
+            <Text variant="medium" fontSize={16} color="red">
+              Cancel
             </Text>
+          </TouchableOpacity>
+        </Box>
 
-            <Text marginTop="m" color="secondaryText" lineHeight={23}>
-              Confirm the details below are accurate and an email will
-              automatically be sent to your account officer to inform them of
-              your request.
-            </Text>
-          </Box>
+        <Box flex={0.9}>
+          <ScrollWrapper>
+            <Box
+              backgroundColor="white"
+              justifyContent="center"
+              alignItems="flex-start"
+              paddingHorizontal="m"
+              paddingVertical="s"
+            >
+              <Text variant="title" color="black" fontSize={24} lineHeight={35}>
+                Let’s go over your top-up request
+              </Text>
 
-          <Box
-            flex={0.4}
-            paddingHorizontal="m"
-            paddingVertical="l"
-            justifyContent="center"
-          >
-            <Text>Top-up Request Details:</Text>
+              <Text marginTop="m" color="secondaryText" lineHeight={23}>
+                Confirm the details below are accurate and an email will
+                automatically be sent to your account officer to inform them of
+                your request.
+              </Text>
+            </Box>
 
-            <Box flex={0.6} paddingHorizontal="m">
-              <Box style={styles.details} padding="m">
-                <Box
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Text>Proposed Amount:</Text>
-                  <Box>
-                    <Text color="black" variant="medium">
-                      ₦1,000,000
+            <Box
+              paddingHorizontal="m"
+              paddingVertical="l"
+              justifyContent="center"
+            >
+              <Text>Investment Request Details:</Text>
+
+              <Box flex={0.6}>
+                <Box style={styles.details} padding="m">
+                  <Box
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Text>Proposed Amount:</Text>
+                    <Box>
+                      <Text color="black" variant="medium">
+                        {formatCurrency(investmentAmount)}
+                      </Text>
+                    </Box>
+                  </Box>
+
+                  <Box
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    marginTop="m"
+                  >
+                    <Text>Tenor:</Text>
+                    <Text color="primaryText" variant="medium" fontSize={16}>
+                      {investmentTenor} months
                     </Text>
                   </Box>
                 </Box>
-
-                <Box
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  marginTop="m"
-                >
-                  <Text>Tenor:</Text>
-                  <Text color="primaryText" variant="medium" fontSize={16}>
-                    2 Years
-                  </Text>
-                </Box>
               </Box>
             </Box>
-          </Box>
 
-          <Box
-            flex={0.4}
-            paddingHorizontal="m"
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigate('InvestmentSuccess')}
+            <Box
+              flex={0.4}
+              paddingHorizontal="m"
+              marginTop="xl"
+              alignItems="center"
+              justifyContent="flex-end"
             >
-              <Text color="white" variant="medium" fontSize={20}>
-                Next
-              </Text>
-            </TouchableOpacity>
+              {errors?.message && (
+                <Text variant="body" color="red">
+                  {errors?.message}
+                </Text>
+              )}
 
-            <TouchableOpacity
-              style={[
-                styles.button,
-                { marginTop: 10, backgroundColor: Theme.colors.red },
-              ]}
-              onPress={() => navigate('Investment')}
-            >
-              <Text color="white" variant="medium" fontSize={20}>
-                Cancel
-              </Text>
-            </TouchableOpacity>
-          </Box>
-        </SafeWrapper>
-      </Box>
+              {loading ? (
+                <ActivityIndicator size="small" color="#00A134" />
+              ) : (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => onRequest()}
+                >
+                  <Text color="white" variant="medium" fontSize={20}>
+                    Next
+                  </Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  { marginTop: 10, backgroundColor: Theme.colors.red },
+                ]}
+                onPress={() => navigate('Products')}
+              >
+                <Text color="white" variant="medium" fontSize={20}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </Box>
+          </ScrollWrapper>
+        </Box>
+      </SafeWrapper>
     </Box>
   );
 }
 const styles = StyleSheet.create({
   button: {
-    width: WIDTH - 55,
+    width: WIDTH - 40,
     height: 55,
     backgroundColor: Theme.colors.greenPrimary,
     alignItems: 'center',
@@ -148,11 +207,24 @@ const styles = StyleSheet.create({
   },
 
   details: {
-    height: moderateScale(100),
+    minHeight: moderateScale(100),
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: Theme.colors.greenPrimary,
+    backgroundColor: Theme.colors.greenOpacity,
     borderRadius: 10,
     marginTop: Theme.spacing.l,
-    backgroundColor: 'white',
   },
 });
+
+const mapStateToProps = (state) => ({
+  investmentAmount: state.investments.investmentAmount,
+  investmentTenor: state.investments.investmentTenor,
+  user: state.auth.user,
+  loading: state.investments.loading,
+  errors: state.investments.errors,
+});
+
+export default connect(mapStateToProps, { RequestInvestment })(
+  InvestmentConfirmation
+);

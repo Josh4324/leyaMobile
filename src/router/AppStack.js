@@ -18,13 +18,16 @@ import LoanTenor from '../screens/App/Products/Loans/loan-tenor';
 import LoanConfirmation from '../screens/App/Products/Loans/loan-confirmation';
 import ActiveLoan from '../screens/App/Products/Loans/active-loan';
 import LoanSuccess from '../screens/App/Products/Loans/LoanSuccess';
+import LoanDetails from '../screens/App/Products/Loans/loan-details';
 
-import TrustFund from '../screens/App/Products/Trust/trust-fund';
 import InvestmentRequest from '../screens/App/Products/Investment/investment-request';
 import MaturityTenor from '../screens/App/Products/Investment/maturity-tenor';
 import InvestmentConfirmation from '../screens/App/Products/Investment/investment-confirmation';
-import Success from '../components/success';
-import LoanDetails from '../screens/App/Products/Loans/loan-details';
+import InvestmentSuccess from '../screens/App/Products/Investment/InvestmentSuccess';
+import ActiveInvestment from '../screens/App/Products/Investment/active-investment';
+
+// import Success from '../components/success';
+import TrustFund from '../screens/App/Products/Trust/trust-fund';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,7 +65,7 @@ const InvestmentStack = () => {
         name="InvestmentConfirmation"
         component={InvestmentConfirmation}
       />
-      <Stack.Screen name="InvestmentSuccess" component={Success} />
+      <Stack.Screen name="InvestmentSuccess" component={InvestmentSuccess} />
     </Stack.Navigator>
   );
 };
@@ -133,6 +136,8 @@ const AppStack = () => {
       <Stack.Screen name="Investment" component={InvestmentStack} />
       <Stack.Screen name="Loans" component={LoanStack} />
       <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
+      <Stack.Screen name="ActiveInvestment" component={ActiveInvestment} />
+
       <Stack.Screen name="LoanDetails" component={LoanDetails} />
       <Stack.Screen name="TrustFund" component={TrustFund} />
     </Stack.Navigator>

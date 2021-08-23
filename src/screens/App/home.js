@@ -14,6 +14,7 @@ import Theme, { Box, Text } from '../../utils/theme';
 import Pattern from '../../../assets/images/home-pattern.svg';
 import { moderateScale } from 'react-native-size-matters';
 import { GetCustomerLoans } from '../../redux/Loans/loan-actions';
+import { GetCustomerInvestments } from '../../redux/Investments/investment-actions';
 
 import AppHeader from '../../components/app-header';
 import AccountCard from '../../components/account-card';
@@ -28,11 +29,20 @@ if (Platform.OS === 'android') {
   }
 }
 
-function Home({ navigation, user, loan, GetCustomerLoans }) {
+function Home({
+  navigation,
+  user,
+  loan,
+  GetCustomerLoans,
+  GetCustomerInvestments,
+  investments,
+}) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
+  const [investmentRoute, setInvestmentRoute] = useState('');
+  const investment = investments[investments.length - 1];
 
-  console.log(user);
+  // console.log(user);
 
   function formatCurrency(num) {
     return Intl.NumberFormat('en-NG', {
@@ -45,7 +55,13 @@ function Home({ navigation, user, loan, GetCustomerLoans }) {
   useEffect(() => {
     let id = user?.customer.customerId;
     GetCustomerLoans(id);
-  }, [GetCustomerLoans]);
+    GetCustomerInvestments(id);
+    if (investments.length !== 0) {
+      setInvestmentRoute('ActiveInvestment');
+    } else {
+      setInvestmentRoute('Investment');
+    }
+  }, [GetCustomerLoans, GetCustomerInvestments]);
 
   return (
     <Box flex={1}>
@@ -72,7 +88,7 @@ function Home({ navigation, user, loan, GetCustomerLoans }) {
           >
             <TouchableOpacity
               style={[styles.actionButton, { marginRight: 28 }]}
-              onPress={() => navigate('Investment')}
+              onPress={() => navigate(investmentRoute)}
             >
               <Text color="white" variant="medium" fontSize={16}>
                 Add Funds
@@ -149,6 +165,39 @@ function Home({ navigation, user, loan, GetCustomerLoans }) {
                 </Box>
               </Box>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigate('ActiveInvestment')}>
+              <Box
+                backgroundColor="inputBG"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                padding="s"
+                borderTopWidth={1}
+                borderBottomWidth={1}
+                borderBottomColor="border"
+                borderTopColor="border"
+              >
+                <Box style={styles.activityIcon}>
+                  <Ionicons
+                    name="checkmark-done-outline"
+                    size={22}
+                    color={Theme.colors.greenPrimary}
+                  />
+                </Box>
+                <Box>
+                  <Text variant="medium" color="dark">
+                    Investment Request Submitted
+                  </Text>
+                  <Text variant="body" color="primaryText" fontSize={12}>
+                    {moment(investment?.startDate).format('DD MMM YYYY')}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text>{formatCurrency(investment?.amount)}</Text>
+                </Box>
+              </Box>
+            </TouchableOpacity>
           </Box>
         </Suspense>
       )}
@@ -190,5 +239,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   loan: state.loans.loan,
+  investments: state.investments.investments,
 });
-export default connect(mapStateToProps, { GetCustomerLoans })(Home);
+export default connect(mapStateToProps, {
+  GetCustomerLoans,
+  GetCustomerInvestments,
+})(Home);

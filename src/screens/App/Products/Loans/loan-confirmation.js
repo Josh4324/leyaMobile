@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
-  TextInput,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
@@ -35,8 +34,6 @@ function LoanConfirmation({
   loading,
   errors,
 }) {
-  const [tenor, setTenor] = useState('');
-  const [agree, setAgree] = useState(false);
   const { navigate } = navigation;
 
   function formatCurrency(num) {
@@ -60,9 +57,9 @@ function LoanConfirmation({
   const onRequest = () => {
     const payload = {
       loanProductId: selectedProduct.id,
-      loanAmount: parseInt(loanAmount),
       customerId: user.customer.customerId,
       tenor: loanTenor,
+      loanAmount: parseInt(loanAmount),
     };
     console.log(payload);
     RequestLoan(payload, navigate);
@@ -121,7 +118,7 @@ function LoanConfirmation({
               paddingVertical="l"
               justifyContent="center"
             >
-              <Text>Top-up Request Details:</Text>
+              <Text>Loan Request Details:</Text>
 
               <Box flex={0.6}>
                 <Box style={styles.details} padding="m">
