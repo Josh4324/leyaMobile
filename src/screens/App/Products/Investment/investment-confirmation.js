@@ -168,27 +168,29 @@ function InvestmentConfirmation({
               {loading ? (
                 <ActivityIndicator size="small" color="#00A134" />
               ) : (
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => onRequest()}
-                >
-                  <Text color="white" variant="medium" fontSize={20}>
-                    Next
-                  </Text>
-                </TouchableOpacity>
-              )}
+                <>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => onRequest()}
+                  >
+                    <Text color="white" variant="medium" fontSize={20}>
+                      Next
+                    </Text>
+                  </TouchableOpacity>
 
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  { marginTop: 10, backgroundColor: Theme.colors.red },
-                ]}
-                onPress={() => navigate('Products')}
-              >
-                <Text color="white" variant="medium" fontSize={20}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.button,
+                      { marginTop: 10, backgroundColor: Theme.colors.red },
+                    ]}
+                    onPress={() => navigate('Products')}
+                  >
+                    <Text color="white" variant="medium" fontSize={20}>
+                      Cancel
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              )}
             </Box>
           </ScrollWrapper>
         </Box>

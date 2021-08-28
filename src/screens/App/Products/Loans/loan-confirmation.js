@@ -67,11 +67,10 @@ function LoanConfirmation({
   return (
     <Box flex={1} backgroundColor="white">
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
-      <SafeWrapper propedStyles={{ flex: 1 }}>
+      <SafeWrapper propedStyles={{ flex: 0.07 }}>
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.05}
           justifyContent="space-between"
           backgroundColor="white"
           alignItems="flex-end"
@@ -92,75 +91,50 @@ function LoanConfirmation({
             </Text>
           </TouchableOpacity>
         </Box>
+      </SafeWrapper>
 
-        <Box flex={0.9}>
-          <ScrollWrapper>
-            <Box
-              backgroundColor="white"
-              justifyContent="center"
-              alignItems="flex-start"
-              paddingHorizontal="m"
-              paddingVertical="s"
-            >
-              <Text variant="title" color="black" fontSize={24} lineHeight={35}>
-                Let’s go over your {selectedProduct.name} loan request
-              </Text>
+      <Box flex={0.9}>
+        <ScrollWrapper>
+          <Box
+            backgroundColor="white"
+            justifyContent="center"
+            alignItems="flex-start"
+            paddingHorizontal="m"
+          >
+            <Text variant="title" color="black" fontSize={24} lineHeight={35}>
+              Let’s go over your {selectedProduct.name} loan request
+            </Text>
 
-              <Text marginTop="m" color="secondaryText" lineHeight={23}>
-                Confirm the details below are accurate and an email will
-                automatically be sent to your account officer to inform them of
-                your request.
-              </Text>
-            </Box>
+            <Text marginTop="m" color="secondaryText" lineHeight={23}>
+              Confirm the details below are accurate and an email will
+              automatically be sent to your account officer to inform them of
+              your request.
+            </Text>
+          </Box>
 
-            <Box
-              paddingHorizontal="m"
-              paddingVertical="l"
-              justifyContent="center"
-            >
-              <Text>Loan Request Details:</Text>
+          <Box
+            paddingHorizontal="m"
+            paddingVertical="l"
+            justifyContent="center"
+          >
+            <Text>Loan Request Details:</Text>
 
-              <Box flex={0.6}>
-                <Box style={styles.details} padding="m">
+            <Box flex={0.6}>
+              <Box style={styles.details} padding="m">
+                <Box
+                  borderBottomWidth={1}
+                  borderBottomColor="greenPrimary"
+                  paddingBottom="l"
+                >
                   <Box
-                    borderBottomWidth={1}
-                    borderBottomColor="greenPrimary"
-                    paddingBottom="l"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    <Box
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Text>Proposed Amount:</Text>
-                      <Box>
-                        <Text color="black" variant="medium">
-                          {formatCurrency(loanAmount)}
-                        </Text>
-                      </Box>
-                    </Box>
-
-                    <Box
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      marginTop="m"
-                    >
-                      <Text>Tenor:</Text>
-                      <Text color="primaryText" variant="medium" fontSize={16}>
-                        {loanTenor} months
-                      </Text>
-                    </Box>
-
-                    <Box
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      marginTop="m"
-                    >
-                      <Text>Monthly Repayment:</Text>
-                      <Text color="primaryText" variant="medium" fontSize={16}>
-                        {calculateRepayment()}
+                    <Text>Proposed Amount:</Text>
+                    <Box>
+                      <Text color="black" variant="medium">
+                        {formatCurrency(loanAmount)}
                       </Text>
                     </Box>
                   </Box>
@@ -171,12 +145,10 @@ function LoanConfirmation({
                     alignItems="center"
                     marginTop="m"
                   >
-                    <Text>Monthly Interest:</Text>
-                    <Box>
-                      <Text color="black" variant="medium">
-                        {selectedProduct.interestRate}% Monthly
-                      </Text>
-                    </Box>
+                    <Text>Tenor:</Text>
+                    <Text color="primaryText" variant="medium" fontSize={16}>
+                      {loanTenor} months
+                    </Text>
                   </Box>
 
                   <Box
@@ -185,32 +157,60 @@ function LoanConfirmation({
                     alignItems="center"
                     marginTop="m"
                   >
-                    <Text>Default Fee:</Text>
-                    <Box>
-                      <Text color="black" variant="medium">
-                        0.05%
-                      </Text>
-                    </Box>
+                    <Text>Monthly Repayment:</Text>
+                    <Text color="primaryText" variant="medium" fontSize={16}>
+                      {calculateRepayment()}
+                    </Text>
+                  </Box>
+                </Box>
+
+                <Box
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  marginTop="m"
+                >
+                  <Text>Monthly Interest:</Text>
+                  <Box>
+                    <Text color="black" variant="medium">
+                      {selectedProduct.interestRate}% Monthly
+                    </Text>
+                  </Box>
+                </Box>
+
+                <Box
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  marginTop="m"
+                >
+                  <Text>Default Fee:</Text>
+                  <Box>
+                    <Text color="black" variant="medium">
+                      0.05%
+                    </Text>
                   </Box>
                 </Box>
               </Box>
             </Box>
+          </Box>
 
-            <Box
-              flex={0.4}
-              paddingHorizontal="m"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              {errors?.message && (
-                <Text variant="body" color="red">
-                  {errors?.message}
-                </Text>
-              )}
+          <Box
+            flex={0.4}
+            paddingHorizontal="m"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            {errors?.message && (
+              <Text variant="body" color="red">
+                {errors?.message}
+              </Text>
+            )}
 
-              {loading ? (
-                <ActivityIndicator size="small" color="#00A134" />
-              ) : (
+            {loading ? (
+              <ActivityIndicator size="small" color="#00A134" />
+            ) : (
+              <>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => onRequest()}
@@ -219,23 +219,23 @@ function LoanConfirmation({
                     Next
                   </Text>
                 </TouchableOpacity>
-              )}
 
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  { marginTop: 10, backgroundColor: Theme.colors.red },
-                ]}
-                onPress={() => navigate('Products')}
-              >
-                <Text color="white" variant="medium" fontSize={20}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
-            </Box>
-          </ScrollWrapper>
-        </Box>
-      </SafeWrapper>
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    { marginTop: 10, backgroundColor: Theme.colors.red },
+                  ]}
+                  onPress={() => navigate('Products')}
+                >
+                  <Text color="white" variant="medium" fontSize={20}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </Box>
+        </ScrollWrapper>
+      </Box>
     </Box>
   );
 }

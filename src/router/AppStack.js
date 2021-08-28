@@ -7,6 +7,8 @@ import Home from '../screens/App/home';
 import Products from '../screens/App/Products/products';
 import Portfolio from '../screens/App/Portfolio/portfolio';
 import Settings from '../screens/App/Settings/settings';
+import FAQS from '../screens/App/Settings/faqs';
+
 import UpdateInformation from '../screens/App/Settings/update-information';
 import PortfolioDetails from '../screens/App/Portfolio/portfolio-details';
 import Investment from '../screens/App/Products/Investment/investment';
@@ -109,6 +111,7 @@ const SettingsStack = () => {
     <Stack.Navigator headerMode="none" initialRouteName="Settings">
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="UpdateInformation" component={UpdateInformation} />
+      <Stack.Screen name="FAQS" component={FAQS} />
     </Stack.Navigator>
   );
 };

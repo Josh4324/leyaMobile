@@ -4,6 +4,7 @@ import {
   Dimensions,
   TouchableOpacity,
   useWindowDimensions,
+  StatusBar,
 } from 'react-native';
 import Theme, { Box, Text } from '../../../../utils/theme';
 import SuccessSVG from '../../../../../assets/images/success.svg';
@@ -26,6 +27,8 @@ function InvestmentSuccess({ navigation, text, auth }) {
 
   return (
     <Box style={styles.wrapper} flex={1} position="relative">
+      <StatusBar backgroundColor="#00A134" barStyle="light-content" />
+
       <PatternSVG
         style={{
           position: 'absolute',
@@ -50,16 +53,18 @@ function InvestmentSuccess({ navigation, text, auth }) {
             <Text color="white" variant="medium" fontSize={30}>
               Congratulations!
             </Text>
-            <Text
-              color="white"
-              variant="body"
-              fontSize={16}
-              marginTop="m"
-              textAlign="center"
-            >
-              Your request has been sent. Your account officer will contact you
-              upon approval.
-            </Text>
+            <Box paddingHorizontal="m">
+              <Text
+                color="white"
+                variant="body"
+                fontSize={16}
+                marginTop="m"
+                textAlign="center"
+              >
+                Your request has been sent. Your account officer will contact
+                you upon approval.
+              </Text>
+            </Box>
           </Box>
           <Box
             flex={0.3}

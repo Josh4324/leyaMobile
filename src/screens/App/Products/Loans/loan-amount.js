@@ -41,16 +41,15 @@ function LoanAmount({ navigation, SetLoanAmount, selectedProduct }) {
   return (
     <Box flex={1} style={{ backgroundColor: 'white' }}>
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
-      <SafeWrapper propedStyles={{ flex: 1, padding: 0, margin: 0 }}>
+      <SafeWrapper propedStyles={{ flex: 0.07 }}>
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.03}
           justifyContent="space-between"
           backgroundColor="white"
           alignItems="flex-end"
           alignContent="center"
-          paddingVertical="s"
+          // paddingVertical="s"
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons
@@ -69,90 +68,84 @@ function LoanAmount({ navigation, SetLoanAmount, selectedProduct }) {
             </Text>
           </TouchableOpacity>
         </Box>
+      </SafeWrapper>
 
-        <Box
-          flex={1}
-          justifyContent="space-between"
-          backgroundColor="darkGreen"
-        >
-          <Box paddingHorizontal="m" marginTop="xl">
-            <Text color="white" variant="medium" fontSize={26} lineHeight={36}>
-              How much would you like to borrow?
-            </Text>
+      <Box flex={1} justifyContent="space-between" backgroundColor="darkGreen">
+        <Box paddingHorizontal="m" marginTop="xl">
+          <Text color="white" variant="medium" fontSize={26} lineHeight={36}>
+            How much would you like to borrow?
+          </Text>
 
-            <Box style={styles.inputBox}>
-              {isEditing ? (
-                <TextInput
-                  style={[styles.input]}
-                  placeholder="₦0"
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                  placeholderTextColor="white"
-                  onChangeText={(amount) => setAmount(amount)}
-                  value={amount}
-                  onBlur={() => setIsEditing(!isEditing)}
-                />
-              ) : (
-                <TextInput
-                  style={[styles.input]}
-                  placeholder="₦0"
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                  placeholderTextColor="white"
-                  onChangeText={(amount) => setAmount(amount)}
-                  value={formatCurrency(amount)}
-                  onFocus={() => setIsEditing(!isEditing)}
-                />
-              )}
+          <Box style={styles.inputBox}>
+            {isEditing ? (
+              <TextInput
+                style={[styles.input]}
+                placeholder="₦0"
+                keyboardType="numeric"
+                returnKeyType="done"
+                placeholderTextColor="white"
+                onChangeText={(amount) => setAmount(amount)}
+                value={amount}
+                onBlur={() => setIsEditing(!isEditing)}
+              />
+            ) : (
+              <TextInput
+                style={[styles.input]}
+                placeholder="₦0"
+                keyboardType="numeric"
+                returnKeyType="done"
+                placeholderTextColor="white"
+                onChangeText={(amount) => setAmount(amount)}
+                value={formatCurrency(amount)}
+                onFocus={() => setIsEditing(!isEditing)}
+              />
+            )}
 
-              <Box
-                marginTop="m"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text color="white" fontSize={14} variant="body">
-                  Monthly interest rate ({selectedProduct.interestRate}%):{' '}
-                </Text>
-                <Text color="white" fontSize={14} variant="body">
-                  {formatCurrency(
-                    (amount * selectedProduct.interestRate) / 100
-                  )}
-                </Text>
-              </Box>
+            <Box
+              marginTop="m"
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Text color="white" fontSize={14} variant="body">
+                Monthly interest rate ({selectedProduct.interestRate}%):{' '}
+              </Text>
+              <Text color="white" fontSize={14} variant="body">
+                {formatCurrency((amount * selectedProduct.interestRate) / 100)}
+              </Text>
             </Box>
           </Box>
-
-          <Box></Box>
-
-          <Box style={{ marginBottom: 50 }}>
-            {amount === '' ? (
-              <Box
-                style={[
-                  styles.button,
-                  { backgroundColor: 'rgba(255, 255,255, 0.5)' },
-                ]}
-              >
-                <Text color="greenPrimary" variant="medium" fontSize={20}>
-                  Continue
-                </Text>
-              </Box>
-            ) : (
-              <TouchableOpacity
-                style={[styles.button, { backgroundColor: Theme.colors.white }]}
-                onPress={() => {
-                  SetLoanAmount(amount);
-                  navigate('LoanTenor');
-                }}
-              >
-                <Text color="greenPrimary" variant="medium" fontSize={20}>
-                  Continue
-                </Text>
-              </TouchableOpacity>
-            )}
-          </Box>
         </Box>
-      </SafeWrapper>
+
+        <Box></Box>
+
+        <Box style={{ marginBottom: 50 }}>
+          {amount === '' ? (
+            <Box
+              style={[
+                styles.button,
+                { backgroundColor: 'rgba(255, 255,255, 0.5)' },
+              ]}
+            >
+              <Text color="greenPrimary" variant="medium" fontSize={20}>
+                Continue
+              </Text>
+            </Box>
+          ) : (
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: Theme.colors.white }]}
+              onPress={() => {
+                SetLoanAmount(amount);
+                navigate('LoanTenor');
+              }}
+            >
+              <Text color="greenPrimary" variant="medium" fontSize={20}>
+                Continue
+              </Text>
+            </TouchableOpacity>
+          )}
+        </Box>
+      </Box>
     </Box>
   );
 }

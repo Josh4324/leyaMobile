@@ -58,7 +58,7 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
           flex={0.05}
           alignItems="center"
           paddingTop="xl"
-          style={{ backgroundColor: '#F9F9F9' }}
+          style={{ backgroundColor: 'green' }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons
@@ -128,7 +128,7 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                 paddingHorizontal="m"
                 justifyContent="center"
                 flexDirection="row"
-                marginBottom="l"
+                marginBottom="m"
               >
                 <Box flex={0.9} flexDirection="row" alignItems="center">
                   <Ionicons
@@ -140,7 +140,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                     Show/Hide Balance
                   </Text>
                 </Box>
-                <Box flexDirection="row" alignItems="center">
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
                   <Switch
                     trackColor={{ false: '#767577', true: '#00A134' }}
                     thumbColor={mask ? '#E5F6EB' : '#f4f3f4'}
@@ -156,7 +161,7 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                 paddingHorizontal="m"
                 justifyContent="center"
                 flexDirection="row"
-                marginBottom="l"
+                marginBottom="m"
               >
                 <Box flex={0.9} flexDirection="row" alignItems="center">
                   <Ionicons
@@ -168,7 +173,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                     Security
                   </Text>
                 </Box>
-                <Box flexDirection="row" alignItems="center">
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
                   <Ionicons
                     name="chevron-forward-outline"
                     color={Theme.colors.greenPrimary}
@@ -176,32 +186,38 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                   />
                 </Box>
               </Box>
-
-              <Box
-                style={styles.boxContainer}
-                paddingHorizontal="m"
-                justifyContent="center"
-                flexDirection="row"
-                marginBottom="l"
-              >
-                <Box flex={0.9} flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="help-circle-outline"
-                    color={Theme.colors.white}
-                    size={26}
-                  />
-                  <Text variant="medium" color="white" marginLeft="l">
-                    Frequently Asked Questions
-                  </Text>
+              <TouchableOpacity onPress={() => navigate('FAQS')}>
+                <Box
+                  style={styles.boxContainer}
+                  paddingHorizontal="m"
+                  justifyContent="center"
+                  flexDirection="row"
+                  marginBottom="m"
+                >
+                  <Box flex={0.9} flexDirection="row" alignItems="center">
+                    <Ionicons
+                      name="help-circle-outline"
+                      color={Theme.colors.white}
+                      size={26}
+                    />
+                    <Text variant="medium" color="white" marginLeft="l">
+                      Frequently Asked Questions
+                    </Text>
+                  </Box>
+                  <Box
+                    flex={0.1}
+                    flexDirection="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                  >
+                    <Ionicons
+                      name="chevron-forward-outline"
+                      color={Theme.colors.greenPrimary}
+                      size={16}
+                    />
+                  </Box>
                 </Box>
-                <Box flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    color={Theme.colors.greenPrimary}
-                    size={16}
-                  />
-                </Box>
-              </Box>
+              </TouchableOpacity>
 
               <TouchableOpacity onPress={() => dialCall()}>
                 <Box
@@ -209,7 +225,7 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                   paddingHorizontal="m"
                   justifyContent="center"
                   flexDirection="row"
-                  marginBottom="l"
+                  marginBottom="m"
                 >
                   <Box flex={0.9} flexDirection="row" alignItems="center">
                     <Ionicons
@@ -221,7 +237,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                       Call Help line (+2349060003039)
                     </Text>
                   </Box>
-                  <Box flexDirection="row" alignItems="center">
+                  <Box
+                    flex={0.1}
+                    flexDirection="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                  >
                     <Ionicons
                       name="chevron-forward-outline"
                       color={Theme.colors.greenPrimary}
@@ -236,7 +257,7 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                 paddingHorizontal="m"
                 justifyContent="center"
                 flexDirection="row"
-                marginBottom="l"
+                marginBottom="m"
                 backgroundColor="red"
               >
                 <Box flex={0.9} flexDirection="row" alignItems="center">
@@ -249,7 +270,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                     About Leya
                   </Text>
                 </Box>
-                <Box flexDirection="row" alignItems="center">
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
                   <Ionicons
                     name="chevron-forward-outline"
                     color={Theme.colors.greenPrimary}
@@ -276,7 +302,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
                       Logout
                     </Text>
                   </Box>
-                  <Box flexDirection="row" alignItems="center">
+                  <Box
+                    flex={0.1}
+                    flexDirection="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                  >
                     <Ionicons
                       name="chevron-forward-outline"
                       color={Theme.colors.white}

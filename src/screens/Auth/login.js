@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   Dimensions,
   Alert,
+  StatusBar,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
@@ -38,6 +39,7 @@ function Login({ LoginUser, errors, navigation, loading }) {
       let nm = await AsyncStorage.getItem('firstName');
       let em = await AsyncStorage.getItem('email');
       setName(nm);
+      console.log(name);
       setEmail(em);
     })();
   });
@@ -102,6 +104,8 @@ function Login({ LoginUser, errors, navigation, loading }) {
 
   return (
     <Box flex={1} backgroundColor="greenOpacity">
+      <StatusBar barStyle="dark-content" backgroundColor="#E5F6EB" />
+
       <SafeWrapper>
         <Leaf
           width={width}
@@ -171,14 +175,26 @@ function Login({ LoginUser, errors, navigation, loading }) {
                   </Text>
                 </TouchableOpacity>
               </Box>
-              <TouchableOpacity
+
+              {name !== null ? (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigate('Credentials')}
+                >
+                  <Text variant="medium" color="greenPrimary" fontSize={14}>
+                    Not {name}?
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+
+              {/* <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigate('Credentials')}
               >
                 <Text variant="medium" color="greenPrimary" fontSize={14}>
                   Not {name}?
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </Box>
             {loading && <ActivityIndicator size="small" color="#00A134" />}
             {errors?.message && (

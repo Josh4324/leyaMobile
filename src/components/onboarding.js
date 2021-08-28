@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { FlatList, Animated, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  FlatList,
+  Animated,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
 import Theme, { Box, Text } from '../utils/theme';
 import Slides from '../utils/slides';
 import OnboardingItem from './onboarding-item';
@@ -45,6 +51,8 @@ export default function Onboarding({ navigation }) {
 
   return (
     <Box flex={0.95}>
+      <StatusBar barStyle="light-content" backgroundColor="#00A134" />
+
       <Box flex={3}>
         <FlatList
           data={Slides}

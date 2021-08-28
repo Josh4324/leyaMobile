@@ -70,10 +70,7 @@ function Home({
 
   return (
     <Box flex={1}>
-      <StatusBar
-        backgroundColor={Theme.colors.greenPrimary}
-        barStyle="light-content"
-      />
+      <StatusBar backgroundColor="#00A134" barStyle="light-content" />
       <Box flex={0.5} backgroundColor="greenPrimary">
         <SafeWrapper propedStyles={{ position: 'relative' }}>
           <Pattern
@@ -162,7 +159,7 @@ function Home({
                     Loan Request Submitted
                   </Text>
                   <Text variant="body" color="primaryText" fontSize={12}>
-                    {loan.creatDate}
+                    {moment(loan?.creatDate).format('DD MMM YYYY')}
                   </Text>
                 </Box>
                 <Box>
