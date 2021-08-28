@@ -9,6 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as LocalAuthentication from 'expo-local-authentication';
+
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
@@ -29,6 +31,7 @@ function Login({ LoginUser, errors, navigation, loading }) {
   const [passcode, setPassCode] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isBiometricSupported, setIsBiometricSupported] = React.useState(false);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +41,58 @@ function Login({ LoginUser, errors, navigation, loading }) {
       setEmail(em);
     })();
   });
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const compatible = await LocalAuthentication.hasHardwareAsync();
+  //     setIsBiometricSupported(compatible);
+  //   })();
+  // });
+
+  // const handleBiometricAuth = async () => {
+  //   // Check if hardware supports biometrics
+  //   const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
+
+  //   // Fallback to default authentication method (password) if Fingerprint is not available
+  //   if (!isBiometricAvailable)
+  //     return Alert.alert(
+  //       'Please enter your password',
+  //       'Biometric Authentication not supported',
+  //       'OK',
+  //       () => fallBackToDefaultAuth()
+  //     );
+
+  //   // Check Biometrics types available (Fingerprint, Facial recognition, Iris recognition)
+  //   let supportedBiometrics;
+  //   if (isBiometricAvailable)
+  //     supportedBiometrics =
+  //       await LocalAuthentication.supportedAuthenticationTypesAsync();
+
+  //   // Check Biometrics are saved locally in user's device
+  //   const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+  //   if (!savedBiometrics)
+  //     return Alert.alert(
+  //       'Biometric record not found',
+  //       'Please login with your password',
+  //       'OK',
+  //       () => fallBackToDefaultAuth()
+  //     );
+
+  //   // Authenticate use with Biometrics (Fingerprint, Facial recognition, Iris recognition)
+
+  //   const biometricAuth = await LocalAuthentication.authenticateAsync({
+  //     promptMessage: 'Login with Biometrics',
+  //     cancelLabel: 'Cancel',
+  //     disableDeviceFallback: true,
+  //   });
+  //   // Log the user in on success
+  //   if (biometricAuth) console.log('success');
+
+  //   console.log({ isBiometricAvailable });
+  //   console.log({ supportedBiometrics });
+  //   console.log({ savedBiometrics });
+  //   console.log({ biometricAuth });
+  // };
 
   const onLogin = (code) => {
     const payload = { userId: email, password: code };

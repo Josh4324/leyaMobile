@@ -16,11 +16,11 @@ import Pattern from '../../assets/images/home-pattern.svg';
 import Plant from '../../assets/images/plant.svg';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-export default function AccountCard({ router }) {
-  const [isEnabled, setIsEnabled] = useState(false);
+export default function AccountCard({ router, mask, masker }) {
+  const [isEnabled, setIsEnabled] = useState(mask);
   const [amount, setAmount] = useState('0');
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => masker();
   const maskAmount = (amt) => {
     return amt.replace(/./g, '*');
   };
@@ -51,7 +51,7 @@ export default function AccountCard({ router }) {
           <Box flexDirection="row" justifyContent="space-between">
             <Box marginTop="m">
               <Text variant="heading" color="primaryText" fontSize={20}>
-                ₦{isEnabled ? maskAmount(amount) : amount}
+                ₦{mask ? maskAmount(amount) : amount}
               </Text>
               <Text variant="body" fontSize={14} marginTop="s">
                 Your Portfolio
@@ -68,10 +68,10 @@ export default function AccountCard({ router }) {
               </Text>
               <Switch
                 trackColor={{ false: '#767577', true: '#00A134' }}
-                thumbColor={isEnabled ? '#E5F6EB' : '#f4f3f4'}
+                thumbColor={mask ? '#E5F6EB' : '#f4f3f4'}
                 ios_backgroundColor="rgba(143, 155, 179, 0.16);"
                 onValueChange={toggleSwitch}
-                value={isEnabled}
+                value={mask}
               />
             </Box>
           </Box>

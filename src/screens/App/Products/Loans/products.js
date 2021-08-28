@@ -4,11 +4,9 @@ import {
   StatusBar,
   TouchableOpacity,
   ActivityIndicator,
-  TextInput,
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 import { moderateScale } from 'react-native-size-matters';

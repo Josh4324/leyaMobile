@@ -8,12 +8,17 @@ const initialState = {
   investmentTenor: '',
   errors: {},
   loading: false,
+  masked: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOADING:
       return { ...state, loading: true };
+
+    case actionTypes.MASK_AMOUNT:
+      // console.log(state.masked);
+      return { ...state, masked: !state.masked };
 
     case actionTypes.SET_INVESTMENT_AMOUNT:
       return { ...state, investmentAmount: action.payload, loading: false };

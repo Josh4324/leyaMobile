@@ -18,7 +18,11 @@ function InvestmentSuccess({ navigation, text, auth }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+    });
+  }, []);
 
   return (
     <Box style={styles.wrapper} flex={1} position="relative">

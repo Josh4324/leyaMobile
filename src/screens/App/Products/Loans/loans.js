@@ -9,7 +9,6 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { moderateScale } from 'react-native-size-matters';
 import Theme, { Box, Text } from '../../../../utils/theme';
-import ScrollWrapper from '../../../../components/scroll-wrapper';
 import SafeWrapper from '../../../../components/safe-wrapper';
 import Clover from '../../../../../assets/images/clover.svg';
 import Adjust from '../../../../../assets/images/adjust.svg';

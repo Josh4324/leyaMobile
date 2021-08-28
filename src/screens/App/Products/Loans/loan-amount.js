@@ -63,7 +63,7 @@ function LoanAmount({ navigation, SetLoanAmount, selectedProduct }) {
             Loan Amount
           </Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Products')}>
             <Text variant="medium" fontSize={16} color="red">
               Cancel
             </Text>

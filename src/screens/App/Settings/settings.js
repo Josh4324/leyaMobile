@@ -1,16 +1,39 @@
-import React from 'react';
-import { StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Alert,
+  Switch,
+  Linking,
+  Platform,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { moderateScale } from 'react-native-size-matters';
 import SafeWrapper from '../../../components/safe-wrapper';
 import { LogoutUser } from '../../../redux/Authentication/auth-actions';
+import { MaskAmount } from '../../../redux/Investments/investment-actions';
 import Theme, { Box, Text } from '../../../utils/theme';
 import ScrollWrapper from '../../../components/scroll-wrapper';
 import UserSVG from '../../../../assets/images/user.svg';
 
-function Settings({ navigation, user, LogoutUser }) {
+function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
   const { navigate } = navigation;
+  const [isEnabled, setIsEnabled] = useState(mask);
+  const toggleSwitch = () => MaskAmount();
+
+  const dialCall = () => {
+    let phoneNumber = '';
+
+    if (Platform.OS === 'android') {
+      phoneNumber = 'tel:${+2349060003039}';
+    } else {
+      phoneNumber = 'telprompt:${+2349060003039}';
+    }
+
+    Linking.openURL(phoneNumber);
+  };
 
   const onLogout = () => {
     Alert.alert('Alert', 'Are you sure you want to logout?', [
@@ -118,10 +141,12 @@ function Settings({ navigation, user, LogoutUser }) {
                   </Text>
                 </Box>
                 <Box flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="eye-off-outline"
-                    color={Theme.colors.white}
-                    size={26}
+                  <Switch
+                    trackColor={{ false: '#767577', true: '#00A134' }}
+                    thumbColor={mask ? '#E5F6EB' : '#f4f3f4'}
+                    ios_backgroundColor="rgba(143, 155, 179, 0.16);"
+                    onValueChange={toggleSwitch}
+                    value={mask}
                   />
                 </Box>
               </Box>
@@ -178,31 +203,33 @@ function Settings({ navigation, user, LogoutUser }) {
                 </Box>
               </Box>
 
-              <Box
-                style={styles.boxContainer}
-                paddingHorizontal="m"
-                justifyContent="center"
-                flexDirection="row"
-                marginBottom="l"
-              >
-                <Box flex={0.9} flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="call-outline"
-                    color={Theme.colors.white}
-                    size={26}
-                  />
-                  <Text variant="medium" color="white" marginLeft="l">
-                    Call Help line (+2349053702388)
-                  </Text>
+              <TouchableOpacity onPress={() => dialCall()}>
+                <Box
+                  style={styles.boxContainer}
+                  paddingHorizontal="m"
+                  justifyContent="center"
+                  flexDirection="row"
+                  marginBottom="l"
+                >
+                  <Box flex={0.9} flexDirection="row" alignItems="center">
+                    <Ionicons
+                      name="call-outline"
+                      color={Theme.colors.white}
+                      size={26}
+                    />
+                    <Text variant="medium" color="white" marginLeft="l">
+                      Call Help line (+2349060003039)
+                    </Text>
+                  </Box>
+                  <Box flexDirection="row" alignItems="center">
+                    <Ionicons
+                      name="chevron-forward-outline"
+                      color={Theme.colors.greenPrimary}
+                      size={16}
+                    />
+                  </Box>
                 </Box>
-                <Box flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    color={Theme.colors.greenPrimary}
-                    size={16}
-                  />
-                </Box>
-              </Box>
+              </TouchableOpacity>
 
               <Box
                 style={styles.boxContainer}
@@ -296,5 +323,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  mask: state.investments.masked,
 });
-export default connect(mapStateToProps, { LogoutUser })(Settings);
+export default connect(mapStateToProps, { LogoutUser, MaskAmount })(Settings);

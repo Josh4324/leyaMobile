@@ -6,7 +6,7 @@ export const FetchLoanProducts = () => async (dispatch) => {
   try {
     dispatch(clearErrors());
     const response = await axios.get(
-      'http://142.93.58.146:9095/LoanProduct/v1/products?delFlg=0'
+      'http://142.93.58.146:9095/Loan/LoanProduct/v1/products?delFlg=0'
     );
     if (response.data.code === 0) {
       dispatch({

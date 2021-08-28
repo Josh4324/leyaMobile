@@ -45,7 +45,6 @@ export const RequestInvestment = (payload, navigate) => async (dispatch) => {
 
 export const GetCustomerInvestments = (id) => async (dispatch) => {
   try {
-    console.log('here');
     dispatch(clearErrors());
     dispatch(setLoading());
     const response = await axios.get(
@@ -72,6 +71,11 @@ export const setLoading = () => {
   };
 };
 
+export const MaskAmount = () => {
+  return {
+    type: actionTypes.MASK_AMOUNT,
+  };
+};
 export const clearErrors = () => {
   return {
     type: actionTypes.CLEAR_ERRORS,

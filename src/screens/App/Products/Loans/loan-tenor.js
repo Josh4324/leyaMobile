@@ -3,7 +3,6 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
-  TextInput,
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -60,7 +59,7 @@ function LoanTenor({ navigation, SetLoanTenor }) {
           <Text variant="medium" fontSize={16}>
             Loan Tenor
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Products')}>
             <Text variant="medium" fontSize={16} color="red">
               Cancel
             </Text>

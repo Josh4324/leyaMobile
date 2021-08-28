@@ -8,7 +8,6 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { moderateScale } from 'react-native-size-matters';
-import Card from '../../../../../assets/images/card.svg';
 import SafeWrapper from '../../../../components/safe-wrapper';
 import Theme, { Box, Text } from '../../../../utils/theme';
 

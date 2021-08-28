@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
   Dimensions,
   useWindowDimensions,
+  ActivityIndicator,
   Platform,
   Alert,
+  BackHandler,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -17,11 +19,15 @@ import Theme, { Box, Text } from '../../../../utils/theme';
 
 import SafeWrapper from '../../../../components/safe-wrapper';
 import AppHeader from '../../../../components/app-header';
-import LoanCard from '../../../../components/account-card';
+import AccountCard from '../../../../components/account-card';
 import ScrollWrapper from '../../../../components/scroll-wrapper';
 
 import 'intl';
 import 'intl/locale-data/jsonp/en-NG';
+import {
+  GetCustomerInvestments,
+  MaskAmount,
+} from '../../../../redux/Investments/investment-actions';
 
 if (Platform.OS === 'android') {
   if (typeof Intl.__disableRegExpRestore === 'function') {
@@ -31,12 +37,19 @@ if (Platform.OS === 'android') {
 
 const { width: WIDTH } = Dimensions.get('window');
 
-function ActiveInvestment({ navigation, user, investments }) {
+function ActiveInvestment({
+  navigation,
+  user,
+  investments,
+  GetCustomerInvestments,
+  MaskAmount,
+  mask,
+}) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
 
   const investment = investments[investments.length - 1];
-  console.log(investment);
+  console.log(user);
 
   function formatCurrency(num) {
     return Intl.NumberFormat('en-NG', {
@@ -45,6 +58,25 @@ function ActiveInvestment({ navigation, user, investments }) {
       minimumFractionDigits: 0,
     }).format(num);
   }
+
+  useEffect(() => {
+    const id = user?.customer?.customerId;
+    GetCustomerInvestments(id);
+  }, [GetCustomerInvestments]);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigate('Products');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Box flex={1}>
@@ -62,7 +94,8 @@ function ActiveInvestment({ navigation, user, investments }) {
             }}
           />
           <AppHeader name={user?.user?.firstName} router={navigate} />
-          <LoanCard router={navigate} />
+          <AccountCard router={navigate} masker={MaskAmount} mask={mask} />
+
           <Box
             flexDirection="row"
             justifyContent="center"
@@ -91,70 +124,74 @@ function ActiveInvestment({ navigation, user, investments }) {
 
       <Box flex={0.55} backgroundColor="white">
         <ScrollWrapper>
-          <Box padding="m">
-            <Text variant="medium" fontSize={18}>
-              Pending Requests
-            </Text>
-
-            <Box
-              style={styles.details}
-              padding="m"
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Box>
-                <Text variant="body">Investment Request</Text>
-                <Text variant="body" color="secondaryText" fontSize={14}>
-                  {moment(investment?.startDate).format('DD MMM YYYY')}
-                </Text>
-              </Box>
-              <Box>
-                <Text variant="medium" fontSize={16}>
-                  {formatCurrency(investment?.amount)}
-                </Text>
-              </Box>
-            </Box>
-          </Box>
-
-          <Box marginTop="s">
-            <Box padding="m">
+          <Suspense
+            fallback={<ActivityIndicator size="small" color="#00A134" />}
+          >
+            <Box padding="m" style={{ marginTop: -20 }}>
               <Text variant="medium" fontSize={18}>
-                Activities
+                Pending Requests
               </Text>
+
+              <Box
+                style={styles.details}
+                padding="m"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Text variant="body">Investment Request</Text>
+                  <Text variant="body" color="secondaryText" fontSize={14}>
+                    {moment(investment?.startDate).format('DD MMM YYYY')}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text variant="medium" fontSize={16}>
+                    {formatCurrency(investment?.amount)}
+                  </Text>
+                </Box>
+              </Box>
             </Box>
 
-            <Box
-              backgroundColor="inputBG"
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              padding="s"
-              borderTopWidth={1}
-              borderBottomWidth={1}
-              borderBottomColor="border"
-              borderTopColor="border"
-            >
-              <Box style={styles.activityIcon}>
-                <Ionicons
-                  name="checkmark-done-outline"
-                  size={22}
-                  color={Theme.colors.greenPrimary}
-                />
-              </Box>
-              <Box>
-                <Text variant="medium" color="dark">
-                  Request Submitted
-                </Text>
-                <Text variant="body" color="primaryText" fontSize={12}>
-                  {moment(investment?.startDate).format('DD MMM YYYY')}
+            <Box marginTop="s">
+              <Box padding="m">
+                <Text variant="medium" fontSize={18}>
+                  Activities
                 </Text>
               </Box>
-              <Box>
-                <Text>{formatCurrency(investment?.amount)}</Text>
+
+              <Box
+                backgroundColor="inputBG"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                padding="s"
+                borderTopWidth={1}
+                borderBottomWidth={1}
+                borderBottomColor="border"
+                borderTopColor="border"
+              >
+                <Box style={styles.activityIcon}>
+                  <Ionicons
+                    name="checkmark-done-outline"
+                    size={22}
+                    color={Theme.colors.greenPrimary}
+                  />
+                </Box>
+                <Box>
+                  <Text variant="medium" color="dark">
+                    Request Submitted
+                  </Text>
+                  <Text variant="body" color="primaryText" fontSize={12}>
+                    {moment(investment?.startDate).format('DD MMM YYYY')}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text>{formatCurrency(investment?.amount)}</Text>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          </Suspense>
         </ScrollWrapper>
       </Box>
     </Box>
@@ -205,6 +242,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   investments: state.investments.investments,
+  mask: state.investments?.masked,
 });
 
-export default connect(mapStateToProps, {})(ActiveInvestment);
+export default connect(mapStateToProps, { GetCustomerInvestments, MaskAmount })(
+  ActiveInvestment
+);

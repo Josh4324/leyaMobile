@@ -14,7 +14,10 @@ import Theme, { Box, Text } from '../../utils/theme';
 import Pattern from '../../../assets/images/home-pattern.svg';
 import { moderateScale } from 'react-native-size-matters';
 import { GetCustomerLoans } from '../../redux/Loans/loan-actions';
-import { GetCustomerInvestments } from '../../redux/Investments/investment-actions';
+import {
+  GetCustomerInvestments,
+  MaskAmount,
+} from '../../redux/Investments/investment-actions';
 
 import AppHeader from '../../components/app-header';
 import AccountCard from '../../components/account-card';
@@ -36,6 +39,8 @@ function Home({
   GetCustomerLoans,
   GetCustomerInvestments,
   investments,
+  MaskAmount,
+  mask,
 }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
@@ -79,7 +84,7 @@ function Home({
             }}
           />
           <AppHeader name={user?.user?.firstName} router={navigate} />
-          <AccountCard router={navigate} />
+          <AccountCard router={navigate} masker={MaskAmount} mask={mask} />
 
           <Box
             flexDirection="row"
@@ -166,38 +171,40 @@ function Home({
               </Box>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigate('ActiveInvestment')}>
-              <Box
-                backgroundColor="inputBG"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
-                padding="s"
-                borderTopWidth={1}
-                borderBottomWidth={1}
-                borderBottomColor="border"
-                borderTopColor="border"
-              >
-                <Box style={styles.activityIcon}>
-                  <Ionicons
-                    name="checkmark-done-outline"
-                    size={22}
-                    color={Theme.colors.greenPrimary}
-                  />
+            {investment && (
+              <TouchableOpacity onPress={() => navigate('ActiveInvestment')}>
+                <Box
+                  backgroundColor="inputBG"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  padding="s"
+                  borderTopWidth={1}
+                  borderBottomWidth={1}
+                  borderBottomColor="border"
+                  borderTopColor="border"
+                >
+                  <Box style={styles.activityIcon}>
+                    <Ionicons
+                      name="checkmark-done-outline"
+                      size={22}
+                      color={Theme.colors.greenPrimary}
+                    />
+                  </Box>
+                  <Box>
+                    <Text variant="medium" color="dark">
+                      Investment Request Submitted
+                    </Text>
+                    <Text variant="body" color="primaryText" fontSize={12}>
+                      {moment(investment?.startDate).format('DD MMM YYYY')}
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text>{formatCurrency(investment?.amount)}</Text>
+                  </Box>
                 </Box>
-                <Box>
-                  <Text variant="medium" color="dark">
-                    Investment Request Submitted
-                  </Text>
-                  <Text variant="body" color="primaryText" fontSize={12}>
-                    {moment(investment?.startDate).format('DD MMM YYYY')}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text>{formatCurrency(investment?.amount)}</Text>
-                </Box>
-              </Box>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )}
           </Box>
         </Suspense>
       )}
@@ -240,8 +247,10 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   loan: state.loans.loan,
   investments: state.investments.investments,
+  mask: state.investments?.masked,
 });
 export default connect(mapStateToProps, {
   GetCustomerLoans,
   GetCustomerInvestments,
+  MaskAmount,
 })(Home);

@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   Platform,
   Alert,
+  BackHandler,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -44,6 +45,20 @@ function ActiveLoan({ navigation, user, loan }) {
       minimumFractionDigits: 0,
     }).format(num);
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      navigate('Products');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Box flex={1}>

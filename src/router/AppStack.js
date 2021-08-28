@@ -65,7 +65,13 @@ const InvestmentStack = () => {
         name="InvestmentConfirmation"
         component={InvestmentConfirmation}
       />
-      <Stack.Screen name="InvestmentSuccess" component={InvestmentSuccess} />
+      <Stack.Screen
+        name="InvestmentSuccess"
+        component={InvestmentSuccess}
+        options={({ navigation }) => ({
+          gestureEnabled: false,
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -79,7 +85,13 @@ const LoanStack = () => {
       <Stack.Screen name="LoanTenor" component={LoanTenor} />
       <Stack.Screen name="LoanConfirmation" component={LoanConfirmation} />
       <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
-      <Stack.Screen name="LoanSuccess" component={LoanSuccess} />
+      <Stack.Screen
+        name="LoanSuccess"
+        component={LoanSuccess}
+        options={({ navigation }) => ({
+          gestureEnabled: false,
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -137,7 +149,6 @@ const AppStack = () => {
       <Stack.Screen name="Loans" component={LoanStack} />
       <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
       <Stack.Screen name="ActiveInvestment" component={ActiveInvestment} />
-
       <Stack.Screen name="LoanDetails" component={LoanDetails} />
       <Stack.Screen name="TrustFund" component={TrustFund} />
     </Stack.Navigator>
