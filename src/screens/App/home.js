@@ -72,7 +72,7 @@ function Home({
       let id = user?.customer.customerId;
       GetCustomerLoans(id);
       GetCustomerInvestments(id);
-    }, [GetCustomerLoans, GetCustomerInvestments, id])
+    }, [GetCustomerLoans, GetCustomerInvestments])
   );
 
   return (
