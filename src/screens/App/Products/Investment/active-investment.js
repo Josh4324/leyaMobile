@@ -84,7 +84,7 @@ function ActiveInvestment({
         backgroundColor={Theme.colors.greenPrimary}
         barStyle="light-content"
       />
-      <Box flex={0.48} backgroundColor="greenPrimary">
+      <Box flex={0.5} backgroundColor="greenPrimary">
         <SafeWrapper propedStyles={{ position: 'relative' }}>
           <Pattern
             width={width}
@@ -122,7 +122,7 @@ function ActiveInvestment({
         </SafeWrapper>
       </Box>
 
-      <Box flex={0.55} backgroundColor="white">
+      <Box flex={0.5} backgroundColor="white">
         <ScrollWrapper>
           <Suspense
             fallback={<ActivityIndicator size="small" color="#00A134" />}
@@ -134,7 +134,7 @@ function ActiveInvestment({
 
               <Box
                 style={styles.details}
-                padding="m"
+                paddingHorizontal="m"
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"

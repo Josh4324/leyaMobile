@@ -124,6 +124,16 @@ const PortfolioStack = () => {
   );
 };
 
+const HomeStack = () => {
+  return (
+    <Stack.Navigator headerMode="none" initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
+      <Stack.Screen name="ActiveInvestment" component={ActiveInvestment} />
+    </Stack.Navigator>
+  );
+};
+
 const HomeTabs = () => {
   return (
     <Tab.Navigator
@@ -135,7 +145,7 @@ const HomeTabs = () => {
         tabBarIcon: ({ color }) => screenOptions(route, color),
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Products" component={ProductStack} />
       <Tab.Screen name="Portfolio" component={PortfolioDetails} />
       <Tab.Screen name="Settings" component={SettingsStack} />
@@ -150,8 +160,8 @@ const AppStack = () => {
       <Stack.Screen name="PortfolioDetails" component={PortfolioDetails} />
       <Stack.Screen name="Investment" component={InvestmentStack} />
       <Stack.Screen name="Loans" component={LoanStack} />
-      <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
-      <Stack.Screen name="ActiveInvestment" component={ActiveInvestment} />
+      {/* <Stack.Screen name="ActiveLoan" component={ActiveLoan} />
+      <Stack.Screen name="ActiveInvestment" component={ActiveInvestment} /> */}
       <Stack.Screen name="LoanDetails" component={LoanDetails} />
       <Stack.Screen name="TrustFund" component={TrustFund} />
     </Stack.Navigator>

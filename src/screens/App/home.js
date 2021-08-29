@@ -6,6 +6,8 @@ import {
   useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+
 import SafeWrapper from '../../components/safe-wrapper';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -49,8 +51,6 @@ function Home({
   const [investmentRoute, setInvestmentRoute] = useState('');
   const investment = investments[investments.length - 1];
 
-  // console.log(user);
-
   function formatCurrency(num) {
     return Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -60,15 +60,20 @@ function Home({
   }
 
   useEffect(() => {
-    let id = user?.customer.customerId;
-    GetCustomerLoans(id);
-    GetCustomerInvestments(id);
     if (investments.length !== 0) {
       setInvestmentRoute('ActiveInvestment');
     } else {
       setInvestmentRoute('Investment');
     }
-  }, [GetCustomerLoans, GetCustomerInvestments]);
+  });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      let id = user?.customer.customerId;
+      GetCustomerLoans(id);
+      GetCustomerInvestments(id);
+    }, [GetCustomerLoans, GetCustomerInvestments, id])
+  );
 
   return (
     <Box flex={1}>

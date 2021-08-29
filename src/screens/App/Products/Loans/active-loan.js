@@ -66,7 +66,7 @@ function ActiveLoan({ navigation, user, loan }) {
         backgroundColor={Theme.colors.greenPrimary}
         barStyle="light-content"
       />
-      <Box flex={0.48} backgroundColor="greenPrimary">
+      <Box flex={0.5} backgroundColor="greenPrimary">
         <SafeWrapper propedStyles={{ position: 'relative' }}>
           <Pattern
             width={width}
@@ -103,9 +103,9 @@ function ActiveLoan({ navigation, user, loan }) {
         </SafeWrapper>
       </Box>
 
-      <Box flex={0.55} backgroundColor="white">
+      <Box flex={0.5} backgroundColor="white">
         <ScrollWrapper>
-          <Box padding="m">
+          <Box paddingHorizontal="m">
             <Text variant="medium" fontSize={18}>
               Pending Requests
             </Text>
