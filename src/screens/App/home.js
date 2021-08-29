@@ -41,6 +41,8 @@ function Home({
   investments,
   MaskAmount,
   mask,
+  loading,
+  investmentLoading,
 }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
@@ -120,7 +122,19 @@ function Home({
         </SafeWrapper>
       </Box>
 
-      {Object.keys(loan).length === 0 ? (
+      {loading || investmentLoading ? (
+        <Box
+          flex={0.5}
+          padding="m"
+          backgroundColor="white"
+          justifyContent="center"
+        >
+          <ActivityIndicator size="small" color="#00A134" />
+          <Text color="greenPrimary" textAlign="center">
+            Fetching activities...
+          </Text>
+        </Box>
+      ) : Object.keys(loan).length === 0 ? (
         <EmptyState />
       ) : (
         <Suspense fallback={<ActivityIndicator size="small" color="#00A134" />}>
@@ -245,6 +259,8 @@ const mapStateToProps = (state) => ({
   loan: state.loans.loan,
   investments: state.investments.investments,
   mask: state.investments?.masked,
+  loading: state.loans.loading,
+  investmentLoading: state.investments.loading,
 });
 export default connect(mapStateToProps, {
   GetCustomerLoans,

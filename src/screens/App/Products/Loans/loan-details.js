@@ -32,19 +32,15 @@ function LoanDetails({ navigation, loan }) {
 
   return (
     <Box flex={1} backgroundColor="inputBG">
-      <StatusBar
-        backgroundColor={Theme.colors.greenPrimary}
-        barStyle="dark-content"
-      />
-      <SafeWrapper propedStyles={{ flex: 1 }}>
+      <StatusBar backgroundColor="#F9F9F9" barStyle="dark-content" />
+      <SafeWrapper propedStyles={{ flex: 0.07 }}>
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.08}
-          alignItems="center"
-          borderBottomWidth={1}
-          borderBottomColor="inputBG"
+          alignContent="center"
           backgroundColor="inputBG"
+          alignItems="flex-end"
+          paddingVertical="s"
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons
@@ -57,106 +53,106 @@ function LoanDetails({ navigation, loan }) {
             Request Details
           </Text>
         </Box>
+      </SafeWrapper>
 
-        <Box backgroundColor="white" flex={0.9} paddingHorizontal="m">
-          <Box style={styles.details} padding="m">
+      <Box backgroundColor="white" flex={1} paddingHorizontal="m">
+        <Box style={styles.details} padding="m">
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text>Request Type:</Text>
+
+            <Text color="dark" variant="medium">
+              Loan Request
+            </Text>
+          </Box>
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s"
+          >
+            <Text>Status:</Text>
             <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
+              style={{
+                backgroundColor: 'rgba(255, 202,51, 0.3)',
+                padding: 8,
+                borderRadius: 5,
+              }}
             >
-              <Text>Request Type:</Text>
-
-              <Text color="dark" variant="medium">
-                Loan Request
-              </Text>
-            </Box>
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="s"
-            >
-              <Text>Status:</Text>
-              <Box
-                style={{
-                  backgroundColor: 'rgba(255, 202,51, 0.3)',
-                  padding: 8,
-                  borderRadius: 5,
-                }}
-              >
-                <Text color="gold">Pending</Text>
-              </Box>
-            </Box>
-
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="s"
-            >
-              <Text>Loan Amount:</Text>
-              <Text color="dark" variant="medium" fontSize={16}>
-                {formatCurrency(loan.loanAmount)}
-              </Text>
-            </Box>
-
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="s"
-            >
-              <Text>Interest Rate:</Text>
-              <Text color="dark" variant="medium" fontSize={16}>
-                {loan.interestRate}%
-              </Text>
-            </Box>
-
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="s"
-            >
-              <Text>Account officer:</Text>
-
-              <Text color="dark" variant="medium" fontSize={16}>
-                Not Assigned
-              </Text>
-            </Box>
-
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="s"
-            >
-              <Text>Tenor:</Text>
-
-              <Text color="dark" variant="medium" fontSize={16}>
-                {loan.tenor}
-              </Text>
+              <Text color="gold">Pending</Text>
             </Box>
           </Box>
 
           <Box
-            flex={0.9}
-            paddingHorizontal="m"
+            flexDirection="row"
+            justifyContent="space-between"
             alignItems="center"
-            justifyContent="flex-end"
+            marginTop="s"
           >
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.goBack()}
-            >
-              <Text color="white" variant="medium" fontSize={20}>
-                Back
-              </Text>
-            </TouchableOpacity>
+            <Text>Loan Amount:</Text>
+            <Text color="dark" variant="medium" fontSize={16}>
+              {formatCurrency(loan.loanAmount)}
+            </Text>
+          </Box>
+
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s"
+          >
+            <Text>Interest Rate:</Text>
+            <Text color="dark" variant="medium" fontSize={16}>
+              {loan.interestRate}%
+            </Text>
+          </Box>
+
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s"
+          >
+            <Text>Account officer:</Text>
+
+            <Text color="dark" variant="medium" fontSize={16}>
+              Not Assigned
+            </Text>
+          </Box>
+
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s"
+          >
+            <Text>Tenor:</Text>
+
+            <Text color="dark" variant="medium" fontSize={16}>
+              {loan.tenor}
+            </Text>
           </Box>
         </Box>
-      </SafeWrapper>
+
+        <Box
+          flex={0.9}
+          paddingHorizontal="m"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text color="white" variant="medium" fontSize={20}>
+              Back
+            </Text>
+          </TouchableOpacity>
+        </Box>
+      </Box>
     </Box>
   );
 }

@@ -51,14 +51,12 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
         backgroundColor={Theme.colors.inputBG}
         barStyle="dark-content"
       />
-      <SafeWrapper propedStyles={{ flex: 1 }}>
+      <SafeWrapper propedStyles={{ flex: 0.06 }}>
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.05}
           alignItems="center"
-          paddingTop="xl"
-          style={{ backgroundColor: 'green' }}
+          paddingTop="s"
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons
@@ -71,255 +69,255 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
             Account Settings
           </Text>
         </Box>
-
-        <Box flex={0.98} paddingHorizontal="m">
-          <ScrollWrapper>
-            <Box marginTop="s">
-              <Box style={styles.disclaimer}>
-                <Box marginRight="m">
-                  <UserSVG />
-                </Box>
-                <Box>
-                  <Text
-                    color="black"
-                    variant="medium"
-                    fontSize={16}
-                    lineHeight={20}
-                    marginBottom="s"
-                  >
-                    {user?.user?.firstName} {user?.user?.surame}
-                  </Text>
-                  <Text
-                    color="black"
-                    variant="body"
-                    fontSize={15}
-                    lineHeight={20}
-                    marginBottom="s"
-                  >
-                    {user?.user?.userId}
-                  </Text>
-                  <Text
-                    color="black"
-                    variant="body"
-                    fontSize={15}
-                    lineHeight={20}
-                  >
-                    +{user?.customer?.mobileNo}
-                  </Text>
-
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigate('UpdateInformation')}
-                  >
-                    <Text
-                      variant="medium"
-                      fontSize={14}
-                      style={{ color: '#A87C00' }}
-                    >
-                      Update Information
-                    </Text>
-                  </TouchableOpacity>
-                </Box>
-              </Box>
-            </Box>
-            <Box marginTop="l">
-              <Box
-                style={styles.boxContainer}
-                paddingHorizontal="m"
-                justifyContent="center"
-                flexDirection="row"
-                marginBottom="m"
-              >
-                <Box flex={0.9} flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="eye-off-outline"
-                    color={Theme.colors.white}
-                    size={26}
-                  />
-                  <Text variant="medium" color="white" marginLeft="l">
-                    Show/Hide Balance
-                  </Text>
-                </Box>
-                <Box
-                  flex={0.1}
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                >
-                  <Switch
-                    trackColor={{ false: '#767577', true: '#00A134' }}
-                    thumbColor={mask ? '#E5F6EB' : '#f4f3f4'}
-                    ios_backgroundColor="rgba(143, 155, 179, 0.16);"
-                    onValueChange={toggleSwitch}
-                    value={mask}
-                  />
-                </Box>
-              </Box>
-
-              <Box
-                style={styles.boxContainer}
-                paddingHorizontal="m"
-                justifyContent="center"
-                flexDirection="row"
-                marginBottom="m"
-              >
-                <Box flex={0.9} flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="lock-closed"
-                    color={Theme.colors.white}
-                    size={26}
-                  />
-                  <Text variant="medium" color="white" marginLeft="l">
-                    Security
-                  </Text>
-                </Box>
-                <Box
-                  flex={0.1}
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                >
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    color={Theme.colors.greenPrimary}
-                    size={16}
-                  />
-                </Box>
-              </Box>
-              <TouchableOpacity onPress={() => navigate('FAQS')}>
-                <Box
-                  style={styles.boxContainer}
-                  paddingHorizontal="m"
-                  justifyContent="center"
-                  flexDirection="row"
-                  marginBottom="m"
-                >
-                  <Box flex={0.9} flexDirection="row" alignItems="center">
-                    <Ionicons
-                      name="help-circle-outline"
-                      color={Theme.colors.white}
-                      size={26}
-                    />
-                    <Text variant="medium" color="white" marginLeft="l">
-                      Frequently Asked Questions
-                    </Text>
-                  </Box>
-                  <Box
-                    flex={0.1}
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                  >
-                    <Ionicons
-                      name="chevron-forward-outline"
-                      color={Theme.colors.greenPrimary}
-                      size={16}
-                    />
-                  </Box>
-                </Box>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => dialCall()}>
-                <Box
-                  style={styles.boxContainer}
-                  paddingHorizontal="m"
-                  justifyContent="center"
-                  flexDirection="row"
-                  marginBottom="m"
-                >
-                  <Box flex={0.9} flexDirection="row" alignItems="center">
-                    <Ionicons
-                      name="call-outline"
-                      color={Theme.colors.white}
-                      size={26}
-                    />
-                    <Text variant="medium" color="white" marginLeft="l">
-                      Call Help line (+2349060003039)
-                    </Text>
-                  </Box>
-                  <Box
-                    flex={0.1}
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                  >
-                    <Ionicons
-                      name="chevron-forward-outline"
-                      color={Theme.colors.greenPrimary}
-                      size={16}
-                    />
-                  </Box>
-                </Box>
-              </TouchableOpacity>
-
-              <Box
-                style={styles.boxContainer}
-                paddingHorizontal="m"
-                justifyContent="center"
-                flexDirection="row"
-                marginBottom="m"
-                backgroundColor="red"
-              >
-                <Box flex={0.9} flexDirection="row" alignItems="center">
-                  <Ionicons
-                    name="information-circle-outline"
-                    color={Theme.colors.white}
-                    size={26}
-                  />
-                  <Text variant="medium" color="white" marginLeft="l">
-                    About Leya
-                  </Text>
-                </Box>
-                <Box
-                  flex={0.1}
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                >
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    color={Theme.colors.greenPrimary}
-                    size={16}
-                  />
-                </Box>
-              </Box>
-
-              <TouchableOpacity onPress={() => onLogout()}>
-                <Box
-                  style={styles.redContainer}
-                  paddingHorizontal="m"
-                  justifyContent="center"
-                  flexDirection="row"
-                  marginBottom="l"
-                >
-                  <Box flex={0.9} flexDirection="row" alignItems="center">
-                    <Ionicons
-                      name="log-out-outline"
-                      color={Theme.colors.white}
-                      size={26}
-                    />
-                    <Text variant="medium" color="white" marginLeft="l">
-                      Logout
-                    </Text>
-                  </Box>
-                  <Box
-                    flex={0.1}
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                  >
-                    <Ionicons
-                      name="chevron-forward-outline"
-                      color={Theme.colors.white}
-                      size={16}
-                    />
-                  </Box>
-                </Box>
-              </TouchableOpacity>
-            </Box>
-          </ScrollWrapper>
-        </Box>
       </SafeWrapper>
+
+      <Box flex={1} paddingHorizontal="m">
+        <ScrollWrapper>
+          <Box>
+            <Box style={styles.disclaimer}>
+              <Box marginRight="m">
+                <UserSVG />
+              </Box>
+              <Box>
+                <Text
+                  color="black"
+                  variant="medium"
+                  fontSize={16}
+                  lineHeight={20}
+                  marginBottom="s"
+                >
+                  {user?.user?.firstName} {user?.user?.surame}
+                </Text>
+                <Text
+                  color="black"
+                  variant="body"
+                  fontSize={15}
+                  lineHeight={20}
+                  marginBottom="s"
+                >
+                  {user?.user?.userId}
+                </Text>
+                <Text
+                  color="black"
+                  variant="body"
+                  fontSize={15}
+                  lineHeight={20}
+                >
+                  +{user?.customer?.mobileNo}
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigate('UpdateInformation')}
+                >
+                  <Text
+                    variant="medium"
+                    fontSize={14}
+                    style={{ color: '#A87C00' }}
+                  >
+                    Update Information
+                  </Text>
+                </TouchableOpacity>
+              </Box>
+            </Box>
+          </Box>
+          <Box marginTop="l">
+            <Box
+              style={styles.boxContainer}
+              paddingHorizontal="m"
+              justifyContent="center"
+              flexDirection="row"
+              marginBottom="m"
+            >
+              <Box flex={0.9} flexDirection="row" alignItems="center">
+                <Ionicons
+                  name="eye-off-outline"
+                  color={Theme.colors.white}
+                  size={26}
+                />
+                <Text variant="medium" color="white" marginLeft="l">
+                  Show/Hide Balance
+                </Text>
+              </Box>
+              <Box
+                flex={0.1}
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="flex-end"
+              >
+                <Switch
+                  trackColor={{ false: '#767577', true: '#00A134' }}
+                  thumbColor={mask ? '#E5F6EB' : '#f4f3f4'}
+                  ios_backgroundColor="rgba(143, 155, 179, 0.16);"
+                  onValueChange={toggleSwitch}
+                  value={mask}
+                />
+              </Box>
+            </Box>
+
+            <Box
+              style={styles.boxContainer}
+              paddingHorizontal="m"
+              justifyContent="center"
+              flexDirection="row"
+              marginBottom="m"
+            >
+              <Box flex={0.9} flexDirection="row" alignItems="center">
+                <Ionicons
+                  name="lock-closed"
+                  color={Theme.colors.white}
+                  size={26}
+                />
+                <Text variant="medium" color="white" marginLeft="l">
+                  Security
+                </Text>
+              </Box>
+              <Box
+                flex={0.1}
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="flex-end"
+              >
+                <Ionicons
+                  name="chevron-forward-outline"
+                  color={Theme.colors.greenPrimary}
+                  size={16}
+                />
+              </Box>
+            </Box>
+            <TouchableOpacity onPress={() => navigate('FAQS')}>
+              <Box
+                style={styles.boxContainer}
+                paddingHorizontal="m"
+                justifyContent="center"
+                flexDirection="row"
+                marginBottom="m"
+              >
+                <Box flex={0.9} flexDirection="row" alignItems="center">
+                  <Ionicons
+                    name="help-circle-outline"
+                    color={Theme.colors.white}
+                    size={26}
+                  />
+                  <Text variant="medium" color="white" marginLeft="l">
+                    Frequently Asked Questions
+                  </Text>
+                </Box>
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    color={Theme.colors.greenPrimary}
+                    size={16}
+                  />
+                </Box>
+              </Box>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => dialCall()}>
+              <Box
+                style={styles.boxContainer}
+                paddingHorizontal="m"
+                justifyContent="center"
+                flexDirection="row"
+                marginBottom="m"
+              >
+                <Box flex={0.9} flexDirection="row" alignItems="center">
+                  <Ionicons
+                    name="call-outline"
+                    color={Theme.colors.white}
+                    size={26}
+                  />
+                  <Text variant="medium" color="white" marginLeft="l">
+                    Call Help line (+2349060003039)
+                  </Text>
+                </Box>
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    color={Theme.colors.greenPrimary}
+                    size={16}
+                  />
+                </Box>
+              </Box>
+            </TouchableOpacity>
+
+            <Box
+              style={styles.boxContainer}
+              paddingHorizontal="m"
+              justifyContent="center"
+              flexDirection="row"
+              marginBottom="m"
+              backgroundColor="red"
+            >
+              <Box flex={0.9} flexDirection="row" alignItems="center">
+                <Ionicons
+                  name="information-circle-outline"
+                  color={Theme.colors.white}
+                  size={26}
+                />
+                <Text variant="medium" color="white" marginLeft="l">
+                  About Leya
+                </Text>
+              </Box>
+              <Box
+                flex={0.1}
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="flex-end"
+              >
+                <Ionicons
+                  name="chevron-forward-outline"
+                  color={Theme.colors.greenPrimary}
+                  size={16}
+                />
+              </Box>
+            </Box>
+
+            <TouchableOpacity onPress={() => onLogout()}>
+              <Box
+                style={styles.redContainer}
+                paddingHorizontal="m"
+                justifyContent="center"
+                flexDirection="row"
+                marginBottom="l"
+              >
+                <Box flex={0.9} flexDirection="row" alignItems="center">
+                  <Ionicons
+                    name="log-out-outline"
+                    color={Theme.colors.white}
+                    size={26}
+                  />
+                  <Text variant="medium" color="white" marginLeft="l">
+                    Logout
+                  </Text>
+                </Box>
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    color={Theme.colors.white}
+                    size={16}
+                  />
+                </Box>
+              </Box>
+            </TouchableOpacity>
+          </Box>
+        </ScrollWrapper>
+      </Box>
     </Box>
   );
 }
