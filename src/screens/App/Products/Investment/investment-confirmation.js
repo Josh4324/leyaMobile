@@ -63,15 +63,12 @@ function InvestmentConfirmation({
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
       <SafeWrapper
         propedStyles={{
-          flex: 1,
-          padding: 0,
-          margin: 0,
+          flex: 0.07,
         }}
       >
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.03}
           justifyContent="space-between"
           backgroundColor="white"
           alignItems="flex-end"
@@ -94,107 +91,107 @@ function InvestmentConfirmation({
             </Text>
           </TouchableOpacity>
         </Box>
+      </SafeWrapper>
 
-        <Box flex={0.9}>
-          <ScrollWrapper>
-            <Box
-              backgroundColor="white"
-              justifyContent="center"
-              alignItems="flex-start"
-              paddingHorizontal="m"
-              paddingVertical="s"
-            >
-              <Text variant="title" color="black" fontSize={24} lineHeight={35}>
-                Let’s go over your top-up request
-              </Text>
+      <Box flex={1}>
+        <ScrollWrapper>
+          <Box
+            backgroundColor="white"
+            justifyContent="center"
+            alignItems="flex-start"
+            paddingHorizontal="m"
+            // paddingVertical="s"
+          >
+            <Text variant="title" color="black" fontSize={24} lineHeight={35}>
+              Let’s go over your top-up request
+            </Text>
 
-              <Text marginTop="m" color="secondaryText" lineHeight={23}>
-                Confirm the details below are accurate and an email will
-                automatically be sent to your account officer to inform them of
-                your request.
-              </Text>
-            </Box>
+            <Text marginTop="m" color="secondaryText" lineHeight={23}>
+              Confirm the details below are accurate and an email will
+              automatically be sent to your account officer to inform them of
+              your request.
+            </Text>
+          </Box>
 
-            <Box
-              paddingHorizontal="m"
-              paddingVertical="l"
-              justifyContent="center"
-            >
-              <Text>Investment Request Details:</Text>
+          <Box
+            paddingHorizontal="m"
+            paddingVertical="l"
+            justifyContent="center"
+          >
+            <Text>Investment Request Details:</Text>
 
-              <Box flex={0.6}>
-                <Box style={styles.details} padding="m">
-                  <Box
-                    flexDirection="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Text>Proposed Amount:</Text>
-                    <Box>
-                      <Text color="black" variant="medium">
-                        {formatCurrency(investmentAmount)}
-                      </Text>
-                    </Box>
-                  </Box>
-
-                  <Box
-                    flexDirection="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    marginTop="m"
-                  >
-                    <Text>Tenor:</Text>
-                    <Text color="primaryText" variant="medium" fontSize={16}>
-                      {investmentTenor} months
+            <Box flex={0.6}>
+              <Box style={styles.details} padding="m">
+                <Box
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Text>Proposed Amount:</Text>
+                  <Box>
+                    <Text color="black" variant="medium">
+                      {formatCurrency(investmentAmount)}
                     </Text>
                   </Box>
                 </Box>
+
+                <Box
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  marginTop="m"
+                >
+                  <Text>Tenor:</Text>
+                  <Text color="primaryText" variant="medium" fontSize={16}>
+                    {investmentTenor} months
+                  </Text>
+                </Box>
               </Box>
             </Box>
+          </Box>
 
-            <Box
-              flex={0.4}
-              paddingHorizontal="m"
-              marginTop="xl"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              {errors?.message && (
-                <Text variant="body" color="red">
-                  {errors?.message}
-                </Text>
-              )}
+          <Box
+            flex={0.4}
+            paddingHorizontal="m"
+            marginTop="xl"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            {errors?.message && (
+              <Text variant="body" color="red">
+                {errors?.message}
+              </Text>
+            )}
 
-              {loading ? (
-                <ActivityIndicator size="small" color="#00A134" />
-              ) : (
-                <>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => onRequest()}
-                  >
-                    <Text color="white" variant="medium" fontSize={20}>
-                      Next
-                    </Text>
-                  </TouchableOpacity>
+            {loading ? (
+              <ActivityIndicator size="small" color="#00A134" />
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => onRequest()}
+                >
+                  <Text color="white" variant="medium" fontSize={20}>
+                    Next
+                  </Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={[
-                      styles.button,
-                      { marginTop: 10, backgroundColor: Theme.colors.red },
-                    ]}
-                    onPress={() => navigate('Products')}
-                  >
-                    <Text color="white" variant="medium" fontSize={20}>
-                      Cancel
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </Box>
-          </ScrollWrapper>
-        </Box>
-      </SafeWrapper>
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    { marginTop: 10, backgroundColor: Theme.colors.red },
+                  ]}
+                  onPress={() => navigate('Products')}
+                >
+                  <Text color="white" variant="medium" fontSize={20}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </Box>
+        </ScrollWrapper>
+      </Box>
     </Box>
   );
 }

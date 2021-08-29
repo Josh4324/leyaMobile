@@ -161,7 +161,7 @@ function ActiveLoan({ navigation, user, loan }) {
                   Loan Request Submitted
                 </Text>
                 <Text variant="body" color="primaryText" fontSize={12}>
-                  {loan.creatDate}
+                  {moment(loan.createDate).format('DD MMM YYYY')}
                 </Text>
               </Box>
               <Box>

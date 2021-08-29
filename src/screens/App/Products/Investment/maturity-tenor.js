@@ -47,11 +47,10 @@ function MaturityTenor({ navigation, SetInvestmentTenor }) {
   return (
     <Box flex={1} backgroundColor="white">
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
-      <SafeWrapper propedStyles={{ flex: 1, padding: 0, margin: 0 }}>
+      <SafeWrapper propedStyles={{ flex: 0.07 }}>
         <Box
           flexDirection="row"
           paddingHorizontal="m"
-          flex={0.03}
           justifyContent="space-between"
           backgroundColor="white"
           alignItems="flex-end"
@@ -74,172 +73,166 @@ function MaturityTenor({ navigation, SetInvestmentTenor }) {
             </Text>
           </TouchableOpacity>
         </Box>
+      </SafeWrapper>
 
-        <Box flex={0.9}>
-          <Box
-            flex={0.2}
-            backgroundColor="greenPrimary"
-            justifyContent="center"
-            alignItems="flex-start"
-            paddingHorizontal="m"
-          >
-            <Text variant="title" fontSize={32} lineHeight={35}>
-              What is your proposed tenor?
+      <Box flex={0.9}>
+        <Box
+          flex={0.2}
+          backgroundColor="greenPrimary"
+          justifyContent="center"
+          alignItems="flex-start"
+          paddingHorizontal="m"
+        >
+          <Text variant="title" fontSize={32} lineHeight={35}>
+            What is your proposed tenor?
+          </Text>
+        </Box>
+
+        <Box flex={0.4}>
+          <Box paddingHorizontal="m" paddingVertical="m">
+            <Text variant="body" color="black">
+              Select your preferred tenor
             </Text>
-          </Box>
 
-          <Box flex={0.4}>
-            <Box paddingHorizontal="m" paddingVertical="m">
-              <Text variant="body" color="black">
-                Select your preferred tenor
-              </Text>
-
-              {!agree ? (
-                <Box style={styles.selectionBox}>
-                  <Box>
-                    <Text color="white">{tenor} Months</Text>
-                  </Box>
-
-                  <Box flexDirection="row">
-                    <TouchableOpacity
-                      style={styles.iconBox}
-                      onPress={() => onDecrease()}
-                    >
-                      <Box>
-                        <Ionicons
-                          name="remove-outline"
-                          size={20}
-                          color={Theme.colors.dark}
-                        />
-                      </Box>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={[styles.iconBox, { marginLeft: 15 }]}
-                      onPress={() => onIncrease()}
-                    >
-                      <Box>
-                        <Ionicons
-                          name="add-outline"
-                          size={20}
-                          color={Theme.colors.dark}
-                        />
-                      </Box>
-                    </TouchableOpacity>
-                  </Box>
-                </Box>
-              ) : (
-                <Box style={[styles.selectionBox, { opacity: 0.4 }]}>
-                  <Box>
-                    <Text color="white">{tenor} Months</Text>
-                  </Box>
-
-                  <Box flexDirection="row">
-                    <Box style={styles.iconBox}>
-                      <Box>
-                        <Ionicons
-                          name="remove-outline"
-                          size={20}
-                          color={Theme.colors.dark}
-                        />
-                      </Box>
-                    </Box>
-
-                    <Box style={[styles.iconBox, { marginLeft: 15 }]}>
-                      <Box>
-                        <Ionicons
-                          name="add-outline"
-                          size={20}
-                          color={Theme.colors.dark}
-                        />
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-            </Box>
-
-            <Box
-              borderTopWidth={1}
-              marginVertical="m"
-              marginHorizontal="m"
-              justifyContent="center"
-              alignItems="center"
-              style={{ borderTopColor: '#EAEAEA' }}
-            >
-              <Text style={{ marginTop: -8, backgroundColor: 'white' }}>
-                OR
-              </Text>
-            </Box>
-
-            <Box paddingHorizontal="m" paddingVertical="s">
+            {!agree ? (
               <Box style={styles.selectionBox}>
-                <Box flexDirection="row" alignItems="center">
-                  <TouchableOpacity
-                    style={styles.checkBox}
-                    onPress={() => onAgree()}
-                  >
-                    <Box style={styles.checkCircle}>
-                      {agree && <Box style={styles.innerDot} />}
-                    </Box>
-                  </TouchableOpacity>
-                  <Box>
-                    <Text color="white">2 Years</Text>
-                  </Box>
+                <Box>
+                  <Text color="white">{tenor} Months</Text>
                 </Box>
 
                 <Box flexDirection="row">
-                  <Text color="white">Maximum</Text>
+                  <TouchableOpacity
+                    style={styles.iconBox}
+                    onPress={() => onDecrease()}
+                  >
+                    <Box>
+                      <Ionicons
+                        name="remove-outline"
+                        size={20}
+                        color={Theme.colors.dark}
+                      />
+                    </Box>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={[styles.iconBox, { marginLeft: 15 }]}
+                    onPress={() => onIncrease()}
+                  >
+                    <Box>
+                      <Ionicons
+                        name="add-outline"
+                        size={20}
+                        color={Theme.colors.dark}
+                      />
+                    </Box>
+                  </TouchableOpacity>
                 </Box>
               </Box>
-            </Box>
+            ) : (
+              <Box style={[styles.selectionBox, { opacity: 0.4 }]}>
+                <Box>
+                  <Text color="white">{tenor} Months</Text>
+                </Box>
+
+                <Box flexDirection="row">
+                  <Box style={styles.iconBox}>
+                    <Box>
+                      <Ionicons
+                        name="remove-outline"
+                        size={20}
+                        color={Theme.colors.dark}
+                      />
+                    </Box>
+                  </Box>
+
+                  <Box style={[styles.iconBox, { marginLeft: 15 }]}>
+                    <Box>
+                      <Ionicons
+                        name="add-outline"
+                        size={20}
+                        color={Theme.colors.dark}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            )}
           </Box>
 
           <Box
-            flex={0.4}
-            paddingHorizontal="m"
+            borderTopWidth={1}
+            marginVertical="m"
+            marginHorizontal="m"
+            justifyContent="center"
             alignItems="center"
-            justifyContent="space-between"
+            style={{ borderTopColor: '#EAEAEA' }}
           >
-            <Box
-              paddingHorizontal="m"
-              marginTop="xxxl"
-              style={styles.disclaimer}
-            >
-              <Box alignItems="center" style={styles.whyBox} flex={0.1}>
-                <Ionicons
-                  name="bulb-outline"
-                  color={Theme.colors.greenPrimary}
-                  size={32}
-                />
+            <Text style={{ marginTop: -8, backgroundColor: 'white' }}>OR</Text>
+          </Box>
+
+          <Box paddingHorizontal="m" paddingVertical="s">
+            <Box style={styles.selectionBox}>
+              <Box flexDirection="row" alignItems="center">
+                <TouchableOpacity
+                  style={styles.checkBox}
+                  onPress={() => onAgree()}
+                >
+                  <Box style={styles.checkCircle}>
+                    {agree && <Box style={styles.innerDot} />}
+                  </Box>
+                </TouchableOpacity>
+                <Box>
+                  <Text color="white">2 Years</Text>
+                </Box>
               </Box>
 
-              <Box flex={0.9} marginLeft="m">
-                <Text
-                  color="greenPrimary"
-                  variant="body"
-                  fontSize={13}
-                  lineHeight={20}
-                >
-                  Please note that the investment window closes on the 7th of
-                  each month
-                </Text>
+              <Box flexDirection="row">
+                <Text color="white">Maximum</Text>
               </Box>
             </Box>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                SetInvestmentTenor(tenor);
-                navigate('InvestmentConfirmation');
-              }}
-            >
-              <Text color="white" variant="medium" fontSize={20}>
-                Next
-              </Text>
-            </TouchableOpacity>
           </Box>
         </Box>
-      </SafeWrapper>
+
+        <Box
+          flex={0.4}
+          paddingHorizontal="m"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Box paddingHorizontal="m" marginTop="xxxl" style={styles.disclaimer}>
+            <Box alignItems="center" style={styles.whyBox} flex={0.1}>
+              <Ionicons
+                name="bulb-outline"
+                color={Theme.colors.greenPrimary}
+                size={32}
+              />
+            </Box>
+
+            <Box flex={0.9} marginLeft="m">
+              <Text
+                color="greenPrimary"
+                variant="body"
+                fontSize={13}
+                lineHeight={20}
+              >
+                Please note that the investment window closes on the 7th of each
+                month
+              </Text>
+            </Box>
+          </Box>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              SetInvestmentTenor(tenor);
+              navigate('InvestmentConfirmation');
+            }}
+          >
+            <Text color="white" variant="medium" fontSize={20}>
+              Next
+            </Text>
+          </TouchableOpacity>
+        </Box>
+      </Box>
     </Box>
   );
 }

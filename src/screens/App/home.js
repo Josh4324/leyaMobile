@@ -122,7 +122,7 @@ function Home({
         </SafeWrapper>
       </Box>
 
-      {loading || investmentLoading ? (
+      {loading ? (
         <Box
           flex={0.5}
           padding="m"
