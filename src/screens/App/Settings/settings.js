@@ -155,36 +155,39 @@ function Settings({ navigation, user, LogoutUser, MaskAmount, mask }) {
               </Box>
             </Box>
 
-            <Box
-              style={styles.boxContainer}
-              paddingHorizontal="m"
-              justifyContent="center"
-              flexDirection="row"
-              marginBottom="m"
-            >
-              <Box flex={0.9} flexDirection="row" alignItems="center">
-                <Ionicons
-                  name="lock-closed"
-                  color={Theme.colors.white}
-                  size={26}
-                />
-                <Text variant="medium" color="white" marginLeft="l">
-                  Security
-                </Text>
-              </Box>
+            <TouchableOpacity onPress={() => navigate('Security')}>
               <Box
-                flex={0.1}
+                style={styles.boxContainer}
+                paddingHorizontal="m"
+                justifyContent="center"
                 flexDirection="row"
-                alignItems="center"
-                justifyContent="flex-end"
+                marginBottom="m"
               >
-                <Ionicons
-                  name="chevron-forward-outline"
-                  color={Theme.colors.greenPrimary}
-                  size={16}
-                />
+                <Box flex={0.9} flexDirection="row" alignItems="center">
+                  <Ionicons
+                    name="lock-closed"
+                    color={Theme.colors.white}
+                    size={26}
+                  />
+                  <Text variant="medium" color="white" marginLeft="l">
+                    Security
+                  </Text>
+                </Box>
+                <Box
+                  flex={0.1}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    color={Theme.colors.greenPrimary}
+                    size={16}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => navigate('FAQS')}>
               <Box
                 style={styles.boxContainer}

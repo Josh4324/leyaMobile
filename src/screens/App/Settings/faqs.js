@@ -4,7 +4,6 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Transitioning, Transition } from 'react-native-reanimated';

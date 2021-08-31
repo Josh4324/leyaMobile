@@ -8,6 +8,7 @@ import Products from '../screens/App/Products/products';
 import Portfolio from '../screens/App/Portfolio/portfolio';
 import Settings from '../screens/App/Settings/settings';
 import FAQS from '../screens/App/Settings/faqs';
+import Security from '../screens/App/Settings/security';
 
 import UpdateInformation from '../screens/App/Settings/update-information';
 import PortfolioDetails from '../screens/App/Portfolio/portfolio-details';
@@ -112,6 +113,7 @@ const SettingsStack = () => {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="UpdateInformation" component={UpdateInformation} />
       <Stack.Screen name="FAQS" component={FAQS} />
+      <Stack.Screen name="Security" component={Security} />
     </Stack.Navigator>
   );
 };
