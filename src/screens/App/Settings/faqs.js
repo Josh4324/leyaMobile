@@ -1,26 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  Alert,
-  Switch,
-  Linking,
-  Platform,
+  View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import { moderateScale } from 'react-native-size-matters';
+import { Transitioning, Transition } from 'react-native-reanimated';
 import SafeWrapper from '../../../components/safe-wrapper';
-import { LogoutUser } from '../../../redux/Authentication/auth-actions';
-import { MaskAmount } from '../../../redux/Investments/investment-actions';
 import Theme, { Box, Text } from '../../../utils/theme';
 import ScrollWrapper from '../../../components/scroll-wrapper';
+
+import { sections } from '../../../utils/faqs';
+
+const transition = (
+  <Transition.Together>
+    <Transition.In type="fade" durationMs={200} />
+    <Transition.Change />
+    <Transition.Out type="fade" durationMs={200} />
+  </Transition.Together>
+);
 export default function FAQS({ navigation }) {
   const { navigate } = navigation;
+  const [section, setSection] = useState('investments');
+  const [currentIndex, setCurrentIndex] = useState(null);
+
+  const ref = useRef();
+
+  const onSectionSelect = (selection) => {
+    setSection(selection);
+  };
+
   return (
-    <Box flex={1} style={{ backgroundColor: 'white' }}>
+    <Transitioning.View
+      ref={ref}
+      transition={transition}
+      style={{ backgroundColor: 'white', flex: 1 }}
+    >
       <StatusBar backgroundColor={Theme.colors.white} barStyle="dark-content" />
 
       <SafeWrapper propedStyles={{ flex: 0.07 }}>
@@ -65,7 +82,7 @@ export default function FAQS({ navigation }) {
           </Text>
         </Box>
 
-        <Box flex={0.8}>
+        <Box flex={0.8} backgroundColor="greenOpacity">
           <Box flexDirection="row" paddingHorizontal="m" paddingVertical="m">
             <ScrollView
               style={styles.scrollView}
@@ -74,28 +91,125 @@ export default function FAQS({ navigation }) {
               bounces={false}
               scrollEventThrottle={32}
             >
-              <TouchableOpacity>
-                <Box style={styles.pill}>
-                  <Text>INVESTMENTS</Text>
+              <TouchableOpacity onPress={() => onSectionSelect('investments')}>
+                <Box
+                  style={
+                    section === 'investments' ? styles.pillActive : styles.pill
+                  }
+                >
+                  <Text
+                    style={
+                      section === 'investments'
+                        ? styles.pillActiveText
+                        : styles.pillText
+                    }
+                  >
+                    INVESTMENTS
+                  </Text>
                 </Box>
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Box style={styles.pill}>
-                  <Text>BEANS</Text>
+              <TouchableOpacity onPress={() => onSectionSelect('beans')}>
+                <Box
+                  style={section === 'beans' ? styles.pillActive : styles.pill}
+                >
+                  <Text
+                    style={
+                      section === 'beans'
+                        ? styles.pillActiveText
+                        : styles.pillText
+                    }
+                  >
+                    BEANS
+                  </Text>
                 </Box>
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Box style={styles.pill}>
-                  <Text>GADGET FINANCING</Text>
+              <TouchableOpacity onPress={() => onSectionSelect('gadgets')}>
+                <Box
+                  style={
+                    section === 'gadgets' ? styles.pillActive : styles.pill
+                  }
+                >
+                  <Text
+                    style={
+                      section === 'gadgets'
+                        ? styles.pillActiveText
+                        : styles.pillText
+                    }
+                  >
+                    GADGET FINANCING
+                  </Text>
                 </Box>
               </TouchableOpacity>
             </ScrollView>
           </Box>
+
+          <ScrollWrapper>
+            {sections[section].map((section, index) => (
+              <Box padding="s" key={index + 1}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.cardContainer}
+                  onPress={() => {
+                    ref.current.animateNextTransition();
+                    setCurrentIndex(index === currentIndex ? null : index);
+                  }}
+                >
+                  <Box
+                    backgroundColor="white"
+                    padding="m"
+                    borderRadius="s"
+                    style={styles.card}
+                  >
+                    <Box
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Box flex={0.9}>
+                        <Text
+                          variant="medium"
+                          lineHeight={20}
+                          color="darkGreen"
+                        >
+                          {section.question}
+                        </Text>
+                      </Box>
+
+                      <Box
+                        flex={0.1}
+                        justifyContent="center"
+                        alignItems="flex-end"
+                      >
+                        <Ionicons
+                          name="chevron-down-outline"
+                          color={Theme.colors.greenPrimary}
+                          size={20}
+                        />
+                      </Box>
+                    </Box>
+
+                    {index === currentIndex && (
+                      <Box paddingTop="m">
+                        <Text
+                          variant="body"
+                          fontSize={14}
+                          lineHeight={20}
+                          color="dark"
+                        >
+                          {section.answer}
+                        </Text>
+                      </Box>
+                    )}
+                  </Box>
+                </TouchableOpacity>
+              </Box>
+            ))}
+          </ScrollWrapper>
         </Box>
       </Box>
-    </Box>
+    </Transitioning.View>
   );
 }
 
@@ -105,9 +219,32 @@ const styles = StyleSheet.create({
     borderColor: Theme.colors.greenPrimary,
     borderRadius: Theme.borderRadii.l,
     padding: Theme.spacing.s,
-    width: 150,
+    minWidth: 150,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 4,
+  },
+  pillActive: {
+    borderWidth: 1,
+    borderColor: Theme.colors.greenPrimary,
+    backgroundColor: Theme.colors.greenPrimary,
+    borderRadius: Theme.borderRadii.l,
+    padding: Theme.spacing.s,
+    minWidth: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 4,
+  },
+  pillActiveText: {
+    color: 'white',
+  },
+  pillText: {
+    color: Theme.colors.secondaryText,
+  },
+  cardContainer: {
+    flexGrow: 1,
+  },
+  card: {
+    flexGrow: 1,
   },
 });

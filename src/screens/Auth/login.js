@@ -185,16 +185,16 @@ function Login({ LoginUser, errors, navigation, loading }) {
                     Not {name}?
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-
-              {/* <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigate('Credentials')}
-              >
-                <Text variant="medium" color="greenPrimary" fontSize={14}>
-                  Not {name}?
-                </Text>
-              </TouchableOpacity> */}
+              ) : (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigate('Credentials')}
+                >
+                  <Text variant="medium" color="greenPrimary" fontSize={14}>
+                    Sign In
+                  </Text>
+                </TouchableOpacity>
+              )}
             </Box>
             {loading && <ActivityIndicator size="small" color="#00A134" />}
             {errors?.message && (

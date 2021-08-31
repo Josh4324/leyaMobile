@@ -47,8 +47,9 @@ function LoanConfirmation({
   function calculateRepayment() {
     let amt = parseInt(loanAmount);
     let interest = parseInt(selectedProduct.interestRate);
-    let principal = (amt * interest) / 100 + amt;
     let tenor = loanTenor;
+    let principal = amt * (interest / 100) * tenor + amt;
+
     let repayment = principal / tenor;
     console.log(amt, interest, tenor, principal, formatCurrency(repayment));
     return formatCurrency(repayment);
