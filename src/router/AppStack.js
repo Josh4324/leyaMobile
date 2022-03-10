@@ -1,36 +1,37 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
-import Home from '../screens/App/home';
-import Products from '../screens/App/Products/products';
-import Portfolio from '../screens/App/Portfolio/portfolio';
-import Settings from '../screens/App/Settings/settings';
-import FAQS from '../screens/App/Settings/faqs';
-import Security from '../screens/App/Settings/security';
+import Home from "../screens/App/home";
+import Products from "../screens/App/Products/products";
+import Portfolio from "../screens/App/Portfolio/portfolio";
+import Settings from "../screens/App/Settings/settings";
+import FAQS from "../screens/App/Settings/faqs";
+import Security from "../screens/App/Settings/security";
+import About from "../screens/App/Settings/about";
 
-import UpdateInformation from '../screens/App/Settings/update-information';
-import PortfolioDetails from '../screens/App/Portfolio/portfolio-details';
-import Investment from '../screens/App/Products/Investment/investment';
+import UpdateInformation from "../screens/App/Settings/update-information";
+import PortfolioDetails from "../screens/App/Portfolio/portfolio-details";
+import Investment from "../screens/App/Products/Investment/investment";
 
-import Loans from '../screens/App/Products/Loans/loans';
-import LoanProducts from '../screens/App/Products/Loans/products';
-import LoanAmount from '../screens/App/Products/Loans/loan-amount';
-import LoanTenor from '../screens/App/Products/Loans/loan-tenor';
-import LoanConfirmation from '../screens/App/Products/Loans/loan-confirmation';
-import ActiveLoan from '../screens/App/Products/Loans/active-loan';
-import LoanSuccess from '../screens/App/Products/Loans/LoanSuccess';
-import LoanDetails from '../screens/App/Products/Loans/loan-details';
+import Loans from "../screens/App/Products/Loans/loans";
+import LoanProducts from "../screens/App/Products/Loans/products";
+import LoanAmount from "../screens/App/Products/Loans/loan-amount";
+import LoanTenor from "../screens/App/Products/Loans/loan-tenor";
+import LoanConfirmation from "../screens/App/Products/Loans/loan-confirmation";
+import ActiveLoan from "../screens/App/Products/Loans/active-loan";
+import LoanSuccess from "../screens/App/Products/Loans/LoanSuccess";
+import LoanDetails from "../screens/App/Products/Loans/loan-details";
 
-import InvestmentRequest from '../screens/App/Products/Investment/investment-request';
-import MaturityTenor from '../screens/App/Products/Investment/maturity-tenor';
-import InvestmentConfirmation from '../screens/App/Products/Investment/investment-confirmation';
-import InvestmentSuccess from '../screens/App/Products/Investment/InvestmentSuccess';
-import ActiveInvestment from '../screens/App/Products/Investment/active-investment';
+import InvestmentRequest from "../screens/App/Products/Investment/investment-request";
+import MaturityTenor from "../screens/App/Products/Investment/maturity-tenor";
+import InvestmentConfirmation from "../screens/App/Products/Investment/investment-confirmation";
+import InvestmentSuccess from "../screens/App/Products/Investment/InvestmentSuccess";
+import ActiveInvestment from "../screens/App/Products/Investment/active-investment";
 
 // import Success from '../components/success';
-import TrustFund from '../screens/App/Products/Trust/trust-fund';
+import TrustFund from "../screens/App/Products/Trust/trust-fund";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,17 +40,17 @@ const screenOptions = (route, color) => {
   let iconName;
 
   switch (route.name) {
-    case 'Home':
-      iconName = 'home';
+    case "Home":
+      iconName = "home";
       break;
-    case 'Products':
-      iconName = 'grid';
+    case "Products":
+      iconName = "grid";
       break;
-    case 'Portfolio':
-      iconName = 'analytics';
+    case "Portfolio":
+      iconName = "analytics";
       break;
-    case 'Settings':
-      iconName = 'settings';
+    case "Settings":
+      iconName = "settings";
       break;
     default:
       break;
@@ -113,6 +114,7 @@ const SettingsStack = () => {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="UpdateInformation" component={UpdateInformation} />
       <Stack.Screen name="FAQS" component={FAQS} />
+      <Stack.Screen name="About" component={About} />
       <Stack.Screen name="Security" component={Security} />
     </Stack.Navigator>
   );
@@ -140,8 +142,8 @@ const HomeTabs = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#005E1E',
-        inactiveTintColor: '#B5B5B5',
+        activeTintColor: "#005E1E",
+        inactiveTintColor: "#B5B5B5",
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => screenOptions(route, color),

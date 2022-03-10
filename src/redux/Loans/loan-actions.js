@@ -1,12 +1,12 @@
-import * as actionTypes from './loan-types';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as actionTypes from "./loan-types";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const FetchLoanProducts = () => async (dispatch) => {
   try {
     dispatch(clearErrors());
     const response = await axios.get(
-      'http://142.93.58.146:9095/Loan/LoanProduct/v1/products?delFlg=0'
+      "http://142.93.58.146:9095/Loan/LoanProduct/v1/products?delFlg=0"
     );
     if (response.data.code === 0) {
       dispatch({
@@ -28,7 +28,7 @@ export const RequestLoan = (payload, navigate) => async (dispatch) => {
     dispatch(setLoading());
     dispatch(clearErrors());
     const response = await axios.post(
-      'http://142.93.58.146:9095/Loan/v1/requestLoan',
+      "http://142.93.58.146:9095/Loan/v1/requestLoan",
       payload
     );
 
@@ -38,7 +38,7 @@ export const RequestLoan = (payload, navigate) => async (dispatch) => {
         type: actionTypes.REQUEST_LOAN,
         payload: response.data.loanDetails,
       });
-      navigate('LoanSuccess');
+      navigate("LoanSuccess");
     }
   } catch (error) {
     console.log(error.response.data);
@@ -50,15 +50,16 @@ export const RequestLoan = (payload, navigate) => async (dispatch) => {
 };
 
 export const GetCustomerLoans = (id) => async (dispatch) => {
-  // console.log('cID', id);
+  console.log("cID", id);
   try {
+    console.log("loans");
     dispatch(setLoading());
     dispatch(clearErrors());
     const response = await axios.get(
       `http://142.93.58.146:9095/Loan/v1/getLoansByCustomer?custNo=${id}`
     );
 
-    // console.log(response.data.loans);
+    console.log("result", response.data.loans);
 
     if (response.data.code === 0) {
       dispatch({
@@ -67,6 +68,7 @@ export const GetCustomerLoans = (id) => async (dispatch) => {
       });
     }
   } catch (error) {
+    console.log(error);
     dispatch({
       type: actionTypes.GET_ERRORS,
       payload: error.response.data,
@@ -80,7 +82,7 @@ export const SelectedLoan = (selected) => (dispatch) => {
 };
 
 export const SetLoanAmount = (amount) => (dispatch) => {
-  console.log('amt', amount);
+  console.log("amt", amount);
   dispatch({
     type: actionTypes.SET_LOAN_AMOUNT,
     payload: amount,
@@ -88,7 +90,7 @@ export const SetLoanAmount = (amount) => (dispatch) => {
 };
 
 export const SetLoanTenor = (tenor) => (dispatch) => {
-  console.log('tenor', tenor);
+  console.log("tenor", tenor);
   dispatch({
     type: actionTypes.SET_LOAN_TENOR,
     payload: tenor,

@@ -1,35 +1,35 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from "react";
 import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
   useWindowDimensions,
   ActivityIndicator,
-} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
-import SafeWrapper from '../../components/safe-wrapper';
-import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import Theme, { Box, Text } from '../../utils/theme';
-import Pattern from '../../../assets/images/home-pattern.svg';
-import { moderateScale } from 'react-native-size-matters';
-import { GetCustomerLoans } from '../../redux/Loans/loan-actions';
+import SafeWrapper from "../../components/safe-wrapper";
+import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import moment from "moment";
+import Theme, { Box, Text } from "../../utils/theme";
+import Pattern from "../../../assets/images/home-pattern.svg";
+import { moderateScale } from "react-native-size-matters";
+import { GetCustomerLoans } from "../../redux/Loans/loan-actions";
 import {
   GetCustomerInvestments,
   MaskAmount,
-} from '../../redux/Investments/investment-actions';
+} from "../../redux/Investments/investment-actions";
 
-import AppHeader from '../../components/app-header';
-import AccountCard from '../../components/account-card';
-import EmptyState from '../../components/empty-state';
+import AppHeader from "../../components/app-header";
+import AccountCard from "../../components/account-card";
+import EmptyState from "../../components/empty-state";
 
-import 'intl';
-import 'intl/locale-data/jsonp/en-NG';
+import "intl";
+import "intl/locale-data/jsonp/en-NG";
 
-if (Platform.OS === 'android') {
-  if (typeof Intl.__disableRegExpRestore === 'function') {
+if (Platform.OS === "android") {
+  if (typeof Intl.__disableRegExpRestore === "function") {
     Intl.__disableRegExpRestore();
   }
 }
@@ -48,22 +48,22 @@ function Home({
 }) {
   const { width } = useWindowDimensions();
   const { navigate } = navigation;
-  const [investmentRoute, setInvestmentRoute] = useState('');
+  const [investmentRoute, setInvestmentRoute] = useState("");
   const investment = investments[investments.length - 1];
 
   function formatCurrency(num) {
-    return Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
     }).format(num);
   }
 
   useEffect(() => {
     if (investments.length !== 0) {
-      setInvestmentRoute('ActiveInvestment');
+      setInvestmentRoute("ActiveInvestment");
     } else {
-      setInvestmentRoute('Investment');
+      setInvestmentRoute("Investment");
     }
   });
 
@@ -79,12 +79,12 @@ function Home({
     <Box flex={1}>
       <StatusBar backgroundColor="#00A134" barStyle="light-content" />
       <Box flex={0.5} backgroundColor="greenPrimary">
-        <SafeWrapper propedStyles={{ position: 'relative' }}>
+        <SafeWrapper propedStyles={{ position: "relative" }}>
           <Pattern
             width={width}
             style={{
-              position: 'absolute',
-              resizeMode: 'cover',
+              position: "absolute",
+              resizeMode: "cover",
             }}
           />
           <AppHeader name={user?.user?.firstName} router={navigate} />
@@ -154,7 +154,7 @@ function Home({
                 Activities
               </Text>
             </Box>
-            <TouchableOpacity onPress={() => navigate('ActiveLoan')}>
+            <TouchableOpacity onPress={() => navigate("ActiveLoan")}>
               <Box
                 backgroundColor="inputBG"
                 flexDirection="row"
@@ -178,7 +178,7 @@ function Home({
                     Loan Request Submitted
                   </Text>
                   <Text variant="body" color="primaryText" fontSize={12}>
-                    {moment(loan?.creatDate).format('DD MMM YYYY')}
+                    {moment(loan?.creatDate).format("DD MMM YYYY")}
                   </Text>
                 </Box>
                 <Box>
@@ -188,7 +188,7 @@ function Home({
             </TouchableOpacity>
 
             {investment && (
-              <TouchableOpacity onPress={() => navigate('ActiveInvestment')}>
+              <TouchableOpacity onPress={() => navigate("ActiveInvestment")}>
                 <Box
                   backgroundColor="inputBG"
                   flexDirection="row"
@@ -212,7 +212,7 @@ function Home({
                       Investment Request Submitted
                     </Text>
                     <Text variant="body" color="primaryText" fontSize={12}>
-                      {moment(investment?.startDate).format('DD MMM YYYY')}
+                      {moment(investment?.startDate).format("DD MMM YYYY")}
                     </Text>
                   </Box>
                   <Box>
@@ -234,18 +234,18 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.dark,
     height: 60,
     borderRadius: 10,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "row",
   },
   iconBox: {
     height: 24,
     width: 24,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
   activityIcon: {
     height: 54,
@@ -253,9 +253,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     backgroundColor: Theme.colors.greenOpacity,
     borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
 

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import AuthStack from './AuthStack';
-import AppStack from './AppStack';
-import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
+import AuthStack from "./AuthStack";
+import AppStack from "./AppStack";
+import { connect } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Router = ({ auth }) => {
   const [checker, setChecker] = useState(null);
   useEffect(() => {
     (async () => {
-      let ph = await AsyncStorage.getItem('onboarded');
+      let ph = await AsyncStorage.getItem("onboarded");
+      console.log("ph", ph);
       setChecker(ph);
       console.log(ph);
     })();
